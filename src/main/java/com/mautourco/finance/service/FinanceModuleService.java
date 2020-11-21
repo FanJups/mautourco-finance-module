@@ -13,7 +13,7 @@ public class FinanceModuleService {
 
 	public void datePickerValidationDateFrom(Optional<LocalDate> date) throws FinanceModuleException {
 
-		if ((date.isEmpty())) {
+		if (date.isEmpty()) {
 			throw new FinanceModuleException("Please, select Date From!");
 
 		} else {
@@ -32,7 +32,7 @@ public class FinanceModuleService {
 
 	public void datePickerValidationDateTo(Optional<LocalDate> date) throws FinanceModuleException {
 
-		if ((date.isEmpty())) {
+		if (date.isEmpty()) {
 			throw new FinanceModuleException("Please, select Date To!");
 
 		} else {
@@ -51,7 +51,7 @@ public class FinanceModuleService {
 
 	public void comboBoxValidation(Optional<ComboBoxItem> item) throws FinanceModuleException {
 
-		if ((item.isEmpty())) {
+		if (item.isEmpty()) {
 			throw new FinanceModuleException("Please, select an item!");
 
 		}

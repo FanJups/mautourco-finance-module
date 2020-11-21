@@ -154,6 +154,8 @@ public class Controller {
 
 			financeModuleService.comboBoxValidation(Optional.ofNullable(cmb1.getValue()));
 
+			System.err.println("date from : " + dateFrom.getValue());
+
 			data = new TableViewDao().getData(dateFrom.getValue(), dateTo.getValue(), cmb1.getValue().getIdAgency());
 
 			/////////////////////// CREATE TABLE/////////////////////

@@ -24,8 +24,8 @@ public class TableViewDao {
 			String query = " SELECT service_id, resa_id, service_type, TYPE, description, date_effected,"
 					+ " service_from, service_to, paying_agency, inv_jde_code, taxable_claim, "
 					+ "(claim_total_after_disc - taxable_claim) AS vat, inv_c_center, claim_total_after_disc, inv_subsidiary "
-					+ "FROM reservation_claim WHERE date_effected BETWEEN " + dateFrom + " AND " + dateTo
-					+ " AND active =1 AND paying_agency_id =" + idAgency;
+					+ "FROM reservation_claim WHERE date_effected BETWEEN " + "\'" + dateFrom + "\'" + " AND " + "\'"
+					+ dateTo + "\'" + " AND active =1 AND paying_agency_id =" + idAgency;
 
 			String queryTest = " SELECT service_id, resa_id, service_type, TYPE, description, date_effected,"
 					+ " service_from, service_to, paying_agency, inv_jde_code, taxable_claim, "
