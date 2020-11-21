@@ -1,6 +1,7 @@
 package com.mautourco.finance;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,8 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
+
+		Locale.setDefault(Locale.ENGLISH);
 
 		primaryStage.setScene(new Scene(loadFXML("FinanceModule"), 1370, 700));
 		primaryStage.setTitle("Finance Module");

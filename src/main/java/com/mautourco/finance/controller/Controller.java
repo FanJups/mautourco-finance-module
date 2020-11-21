@@ -1,9 +1,7 @@
 package com.mautourco.finance.controller;
 
 import java.sql.Date;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import com.mautourco.finance.dao.ComboBoxDao;
@@ -15,6 +13,7 @@ import com.mautourco.finance.service.FinanceModuleService;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -23,15 +22,17 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 public class Controller {
 
-	public final int ROWS_PER_PAGE = 2;
+	public final int ROWS_PER_PAGE = 4;
 
 	private List<ReservationClaim> data;
 
@@ -100,7 +101,8 @@ public class Controller {
 	@FXML
 	private BorderPane borderPane;
 
-	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d.MM.uuuu", Locale.ENGLISH);
+	@FXML
+	private VBox vBoxTabPagination;
 
 	@FXML
 	private void initialize() {
@@ -135,8 +137,6 @@ public class Controller {
 
 		dateFrom.setEditable(false);
 		dateTo.setEditable(false);
-
-		Locale.setDefault(Locale.ENGLISH);
 
 	}
 
@@ -191,18 +191,20 @@ public class Controller {
 
 			invSubsidiaryCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("invSubsidiary"));
 
-			// tv1.getColumns().addAll(serviceIdCol, resaIdCol, serviceTypeCol, typeCol,
-			// descriptionCol, dateEffectedCol,
-			// serviceFromCol, serviceToCol, payingAgencyCol, invJdeCodeCol,
-			// taxableClaimCol, vatCol,
-			// invCCenterCol, claimTotalAfterDiscCol, invSubsidiaryCol);
-
-			tv1.setItems(FXCollections.observableArrayList(data));
+			// tv1.setItems(FXCollections.observableArrayList(data));
 			// borderPane.getChildren().addAll(anchor);
 
 			// Scene scene = new Scene(new BorderPane(pagination), 500, 500);
 
 			//////////////////////////////////////////
+
+			Pagination pagination = new Pagination((data.size() / ROWS_PER_PAGE), 0);
+			pagination.getStyleClass().add(Pagination.STYLE_CLASS_BULLET);
+			pagination.setPageFactory(this::createPage);
+
+			// vBoxTabPagination.getChildren().clear();
+
+			vBoxTabPagination.getChildren().add(pagination);
 
 		} catch (FinanceModuleException e) {
 
@@ -214,6 +216,15 @@ public class Controller {
 
 		}
 
+	}
+
+	private Node createPage(int pageIndex) {
+
+		int fromIndex = pageIndex * ROWS_PER_PAGE;
+		int toIndex = Math.min(fromIndex + ROWS_PER_PAGE, data.size());
+		tv1.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+
+		return new BorderPane(tv1);
 	}
 
 }

@@ -8,7 +8,9 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mautourco.finance.controller.Controller">
    <top>
@@ -46,24 +48,37 @@
       </HBox>
    </top>
    <center>
-      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" fx:id="tv1">
-          <columns>
-              <TableColumn fx:id="serviceIdCol" minWidth="70.0" prefWidth="50.0" text="Service ID" />
-              <TableColumn fx:id="resaIdCol" minWidth="70.0" prefWidth="50.0" text="Dossier" />
-              <TableColumn fx:id="serviceTypeCol" minWidth="100.0" prefWidth="100.0" text="Service" />
-              <TableColumn fx:id="typeCol" minWidth="100.0" prefWidth="100.0" text="Type" />
-              <TableColumn fx:id="descriptionCol" minWidth="100.0" prefWidth="100.0" text="Claim Desc" />
-              <TableColumn fx:id="dateEffectedCol" minWidth="70.0" prefWidth="70.0" text="Date" />
-              <TableColumn fx:id="serviceFromCol" minWidth="100.0" prefWidth="100.0" text="From" />
-              <TableColumn fx:id="serviceToCol" minWidth="100.0" prefWidth="100.0" text="To" />
-              <TableColumn fx:id="payingAgencyCol" minWidth="100.0" prefWidth="100.0" text="Paying Agency" />
-              <TableColumn fx:id="invJdeCodeCol" minWidth="70.0" prefWidth="70.0" text="Sicorax Code" />
-              <TableColumn fx:id="taxableClaimCol" minWidth="70.0" prefWidth="70.0" text="Taxable Claim" />
-              <TableColumn fx:id="vatCol" minWidth="70.0" prefWidth="70.0" text="VAT" />
-              <TableColumn fx:id="invCCenterCol" minWidth="70.0" prefWidth="70.0" text="Auxiliary" />
-              <TableColumn fx:id="claimTotalAfterDiscCol" minWidth="100.0" prefWidth="100.0" text="Total Claim" />
-              <TableColumn fx:id="invSubsidiaryCol" minWidth="70.0" prefWidth="70.0" text="Subsidiary" />
-          </columns>
-      </TableView>
+   
+
+   			<VBox fx:id="vBoxTabPagination" prefHeight="1000.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
+   			
+   			  <children>
+   		
+		   			<TableView   BorderPane.alignment="CENTER" fx:id="tv1">
+			          <columns>
+			              <TableColumn fx:id="serviceIdCol" minWidth="70.0" prefWidth="50.0" text="Service ID" />
+			              <TableColumn fx:id="resaIdCol" minWidth="70.0" prefWidth="50.0" text="Dossier" />
+			              <TableColumn fx:id="serviceTypeCol" minWidth="100.0" prefWidth="100.0" text="Service" />
+			              <TableColumn fx:id="typeCol" minWidth="100.0" prefWidth="100.0" text="Type" />
+			              <TableColumn fx:id="descriptionCol" minWidth="100.0" prefWidth="100.0" text="Claim Desc" />
+			              <TableColumn fx:id="dateEffectedCol" minWidth="70.0" prefWidth="70.0" text="Date" />
+			              <TableColumn fx:id="serviceFromCol" minWidth="100.0" prefWidth="100.0" text="From" />
+			              <TableColumn fx:id="serviceToCol" minWidth="100.0" prefWidth="100.0" text="To" />
+			              <TableColumn fx:id="payingAgencyCol" minWidth="100.0" prefWidth="100.0" text="Paying Agency" />
+			              <TableColumn fx:id="invJdeCodeCol" minWidth="70.0" prefWidth="70.0" text="Sicorax Code" />
+			              <TableColumn fx:id="taxableClaimCol" minWidth="70.0" prefWidth="70.0" text="Taxable Claim" />
+			              <TableColumn fx:id="vatCol" minWidth="70.0" prefWidth="70.0" text="VAT" />
+			              <TableColumn fx:id="invCCenterCol" minWidth="70.0" prefWidth="70.0" text="Auxiliary" />
+			              <TableColumn fx:id="claimTotalAfterDiscCol" minWidth="100.0" prefWidth="100.0" text="Total Claim" />
+			              <TableColumn fx:id="invSubsidiaryCol" minWidth="70.0" prefWidth="70.0" text="Subsidiary" />
+			          </columns>
+		     	 </TableView>
+		     	 
+		     </children>
+   			
+   		   </VBox>
+   			
+   		
    </center>
+  
 </BorderPane>
