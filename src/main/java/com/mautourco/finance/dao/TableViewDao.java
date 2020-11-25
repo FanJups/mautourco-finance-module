@@ -32,6 +32,11 @@ public class TableViewDao {
 					+ "(claim_total_after_disc - taxable_claim) AS vat, inv_c_center, claim_total_after_disc, inv_subsidiary "
 					+ "FROM reservation_claim WHERE paying_agency_id =" + 130;
 
+			String queryAllTest = " SELECT service_id, resa_id, service_type, TYPE, description, date_effected,"
+					+ " service_from, service_to, paying_agency, inv_jde_code, taxable_claim, "
+					+ "(claim_total_after_disc - taxable_claim) AS vat, inv_c_center, claim_total_after_disc, inv_subsidiary "
+					+ "FROM reservation_claim";
+
 			PreparedStatement statement = con.prepareStatement(query);
 
 			ResultSet set = statement.executeQuery();

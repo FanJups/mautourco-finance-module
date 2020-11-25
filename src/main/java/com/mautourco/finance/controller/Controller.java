@@ -1,13 +1,12 @@
 package com.mautourco.finance.controller;
 
 import java.sql.Date;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import com.mautourco.finance.dao.ComboBoxDao;
 import com.mautourco.finance.dao.TableViewDao;
+import com.mautourco.finance.event.AutoCompleteBox;
 import com.mautourco.finance.exception.FinanceModuleException;
 import com.mautourco.finance.model.ComboBoxItem;
 import com.mautourco.finance.model.ReservationClaim;
@@ -21,13 +20,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Callback;
 
 public class Controller {
 
@@ -100,43 +96,16 @@ public class Controller {
 	@FXML
 	private BorderPane borderPane;
 
-	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d.MM.uuuu", Locale.ENGLISH);
-
 	@FXML
 	private void initialize() {
 		cmb1.setItems(FXCollections.observableArrayList(new ComboBoxDao().getData()));
 
-		// use custom object in ComboBox javafx
-		// Display an attribute of the custom object instead od toString
-		Callback<ListView<ComboBoxItem>, ListCell<ComboBoxItem>> cellFactory = new Callback<ListView<ComboBoxItem>, ListCell<ComboBoxItem>>() {
-
-			@Override
-			public ListCell<ComboBoxItem> call(ListView<ComboBoxItem> l) {
-				return new ListCell<ComboBoxItem>() {
-
-					@Override
-					protected void updateItem(ComboBoxItem item, boolean empty) {
-						super.updateItem(item, empty);
-						if (item == null || empty) {
-							setGraphic(null);
-						} else {
-							setText(item.getName());
-						}
-					}
-				};
-			}
-		};
-
-		// Just set the button cell here:
-		cmb1.setButtonCell(cellFactory.call(null));
-		cmb1.setCellFactory(cellFactory);
+		new AutoCompleteBox(cmb1);
 
 		tv1.setPlaceholder(new Label("No Content"));
 
 		dateFrom.setEditable(false);
 		dateTo.setEditable(false);
-
-		Locale.setDefault(Locale.ENGLISH);
 
 	}
 
@@ -152,7 +121,7 @@ public class Controller {
 
 			financeModuleService.datePickerValidationDateTo(Optional.ofNullable(dateTo.getValue()));
 
-			financeModuleService.comboBoxValidation(Optional.ofNullable(cmb1.getValue()));
+			financeModuleService.comboBoxValidation(Optional.ofNullable(cmb1.getValue().getName()));
 
 			System.err.println("date from : " + dateFrom.getValue());
 

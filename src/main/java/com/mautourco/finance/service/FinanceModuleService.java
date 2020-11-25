@@ -7,7 +7,6 @@ import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
 import com.mautourco.finance.exception.FinanceModuleException;
-import com.mautourco.finance.model.ComboBoxItem;
 
 public class FinanceModuleService {
 
@@ -49,7 +48,7 @@ public class FinanceModuleService {
 
 	}
 
-	public void comboBoxValidation(Optional<ComboBoxItem> item) throws FinanceModuleException {
+	public void comboBoxValidation(Optional<String> item) throws FinanceModuleException {
 
 		if (item.isEmpty()) {
 			throw new FinanceModuleException("Please, select an item!");
