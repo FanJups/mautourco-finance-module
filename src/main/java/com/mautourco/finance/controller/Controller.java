@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.mautourco.finance.dao.ComboBoxDao;
 import com.mautourco.finance.dao.TableViewDao;
+import com.mautourco.finance.event.AutoCompleteBox;
 import com.mautourco.finance.exception.FinanceModuleException;
 import com.mautourco.finance.model.ComboBoxItem;
 import com.mautourco.finance.model.ReservationClaim;
@@ -19,13 +20,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Callback;
 
 public class Controller {
 
@@ -51,49 +49,49 @@ public class Controller {
 	private TableView<ReservationClaim> tv1;
 
 	@FXML
-	private TableColumn serviceIdCol;
+	private TableColumn<ReservationClaim, Long> serviceIdCol;
 
 	@FXML
-	private TableColumn resaIdCol;
+	private TableColumn<ReservationClaim, Long> resaIdCol;
 
 	@FXML
-	private TableColumn serviceTypeCol;
+	private TableColumn<ReservationClaim, String> serviceTypeCol;
 
 	@FXML
-	private TableColumn typeCol;
+	private TableColumn<ReservationClaim, String> typeCol;
 
 	@FXML
-	private TableColumn descriptionCol;
+	private TableColumn<ReservationClaim, String> descriptionCol;
 
 	@FXML
-	private TableColumn dateEffectedCol;
+	private TableColumn<ReservationClaim, Date> dateEffectedCol;
 
 	@FXML
-	private TableColumn serviceFromCol;
+	private TableColumn<ReservationClaim, String> serviceFromCol;
 
 	@FXML
-	private TableColumn serviceToCol;
+	private TableColumn<ReservationClaim, String> serviceToCol;
 
 	@FXML
-	private TableColumn payingAgencyCol;
+	private TableColumn<ReservationClaim, String> payingAgencyCol;
 
 	@FXML
-	private TableColumn invJdeCodeCol;
+	private TableColumn<ReservationClaim, String> invJdeCodeCol;
 
 	@FXML
-	private TableColumn taxableClaimCol;
+	private TableColumn<ReservationClaim, Double> taxableClaimCol;
 
 	@FXML
-	private TableColumn vatCol;
+	private TableColumn<ReservationClaim, Double> vatCol;
 
 	@FXML
-	private TableColumn invCCenterCol;
+	private TableColumn<ReservationClaim, String> invCCenterCol;
 
 	@FXML
-	private TableColumn claimTotalAfterDiscCol;
+	private TableColumn<ReservationClaim, Double> claimTotalAfterDiscCol;
 
 	@FXML
-	private TableColumn invSubsidiaryCol;
+	private TableColumn<ReservationClaim, String> invSubsidiaryCol;
 
 	@FXML
 	private BorderPane borderPane;
@@ -102,40 +100,13 @@ public class Controller {
 	private void initialize() {
 		cmb1.setItems(FXCollections.observableArrayList(new ComboBoxDao().getData()));
 
-		// use custom object in ComboBox javafx
-		// Display an attribute of the custom object instead od toString
-		Callback<ListView<ComboBoxItem>, ListCell<ComboBoxItem>> cellFactory = new Callback<ListView<ComboBoxItem>, ListCell<ComboBoxItem>>() {
-
-			@Override
-			public ListCell<ComboBoxItem> call(ListView<ComboBoxItem> l) {
-				return new ListCell<ComboBoxItem>() {
-
-					@Override
-					protected void updateItem(ComboBoxItem item, boolean empty) {
-						super.updateItem(item, empty);
-						if (item == null || empty) {
-							setGraphic(null);
-						} else {
-							setText(item.getName());
-						}
-					}
-				};
-			}
-		};
-
-		// Just set the button cell here:
-		cmb1.setButtonCell(cellFactory.call(null));
-		cmb1.setCellFactory(cellFactory);
+		new AutoCompleteBox(cmb1);
 
 		tv1.setPlaceholder(new Label("No Content"));
 
 		dateFrom.setEditable(false);
 		dateTo.setEditable(false);
 
-	}
-
-	@FXML
-	private void printValue() {
 	}
 
 	@FXML
@@ -147,8 +118,6 @@ public class Controller {
 			financeModuleService.datePickerValidationDateTo(Optional.ofNullable(dateTo.getValue()));
 
 			financeModuleService.comboBoxValidation(Optional.ofNullable(cmb1.getValue()));
-
-			System.err.println("date from : " + dateFrom.getValue());
 
 			data = new TableViewDao().getData(dateFrom.getValue(), dateTo.getValue(), cmb1.getValue().getIdAgency());
 
@@ -185,18 +154,7 @@ public class Controller {
 
 			invSubsidiaryCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("invSubsidiary"));
 
-			// tv1.getColumns().addAll(serviceIdCol, resaIdCol, serviceTypeCol, typeCol,
-			// descriptionCol, dateEffectedCol,
-			// serviceFromCol, serviceToCol, payingAgencyCol, invJdeCodeCol,
-			// taxableClaimCol, vatCol,
-			// invCCenterCol, claimTotalAfterDiscCol, invSubsidiaryCol);
-
 			tv1.setItems(FXCollections.observableArrayList(data));
-			// borderPane.getChildren().addAll(anchor);
-
-			// Scene scene = new Scene(new BorderPane(pagination), 500, 500);
-
-			//////////////////////////////////////////
 
 		} catch (FinanceModuleException e) {
 
