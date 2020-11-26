@@ -1,9 +1,7 @@
 package com.mautourco.finance.controller;
 
 import java.sql.Date;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import com.mautourco.finance.dao.ComboBoxDao;
@@ -100,8 +98,6 @@ public class Controller {
 	@FXML
 	private BorderPane borderPane;
 
-	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d.MM.uuuu", Locale.ENGLISH);
-
 	@FXML
 	private void initialize() {
 		cmb1.setItems(FXCollections.observableArrayList(new ComboBoxDao().getData()));
@@ -135,8 +131,6 @@ public class Controller {
 
 		dateFrom.setEditable(false);
 		dateTo.setEditable(false);
-
-		Locale.setDefault(Locale.ENGLISH);
 
 	}
 
