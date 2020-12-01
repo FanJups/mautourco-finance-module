@@ -45,6 +45,16 @@ public class TableViewDao {
 					+ "(claim_total_after_disc - taxable_claim) AS vat, inv_c_center, claim_total_after_disc, inv_subsidiary "
 					+ "FROM reservation_claim WHERE paying_agency_id =" + 130;
 
+			String queryAll = " SELECT service_id, resa_id, service_type, type, description, date_effected,"
+					+ " service_from, service_to, paying_agency, inv_jde_code, taxable_claim, "
+					+ "(claim_total_after_disc - taxable_claim) AS vat, inv_c_center, claim_total_after_disc, inv_subsidiary "
+					+ "FROM reservation_claim WHERE service_type LIKE \'%" + serviceFilter + "%\'"
+					+ " AND type LIKE \'%" + typeFilter + "%\'" + " AND description LIKE \'%" + claimDescFilter + "%\'"
+					+ " AND service_from LIKE \'%" + fromFilter + "%\'" + " AND service_to LIKE \'%" + toFilter + "%\'"
+					+ " AND paying_agency LIKE \'%" + payingAgencyFilter + "%\'" + " AND inv_jde_code LIKE \'%"
+					+ sicoraxCodeFilter + "%\'" + " AND inv_c_center LIKE \'%" + auxiliaryFilter + "%\'"
+					+ " AND inv_subsidiary LIKE \'%" + subsidiaryFilter + "%\'";
+
 			PreparedStatement statement = con.prepareStatement(query);
 
 			ResultSet set = statement.executeQuery();
