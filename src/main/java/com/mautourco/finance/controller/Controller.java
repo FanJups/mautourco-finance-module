@@ -21,10 +21,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Callback;
 
 public class Controller {
 
@@ -139,6 +141,36 @@ public class Controller {
 		new AutoCompleteBox(cmb1);
 
 		tv1.setPlaceholder(new Label("No Content"));
+
+		// styling javafx tablerow with null values -> background color : red
+
+		Callback<TableView<ReservationClaim>, TableRow<ReservationClaim>> rowFactory = new Callback<TableView<ReservationClaim>, TableRow<ReservationClaim>>() {
+
+			@Override
+			public TableRow<ReservationClaim> call(TableView<ReservationClaim> l) {
+				return new TableRow<ReservationClaim>() {
+
+					@Override
+					protected void updateItem(ReservationClaim item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item == null || empty) {
+							setStyle("-fx-background-color: #ff2a2a;");
+						} else {
+
+							if (item.getServiceTo().equals("AIRPORT")) {
+
+								setStyle("-fx-background-color: #ff2a2a;");
+
+							}
+
+						}
+
+					}
+				};
+			}
+		};
+
+		tv1.setRowFactory(rowFactory);
 
 		dateFrom.setEditable(false);
 		dateTo.setEditable(false);
