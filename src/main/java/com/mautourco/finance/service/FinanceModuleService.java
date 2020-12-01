@@ -58,6 +58,27 @@ public class FinanceModuleService {
 
 	}
 
+	public String textFieldValidation(Optional<String> value) {
+
+		if (value.isEmpty()) {
+			return "";
+
+		} else {
+
+			String presentValue = value.get();
+
+			if (presentValue.trim().length() == 0) {
+				return "";
+
+			} else {
+
+				return presentValue;
+
+			}
+		}
+
+	}
+
 	private boolean isValid(String input) {
 		DateTimeFormatter formatter =
 

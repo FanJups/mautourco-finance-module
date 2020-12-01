@@ -22,6 +22,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 
@@ -96,6 +97,41 @@ public class Controller {
 	@FXML
 	private BorderPane borderPane;
 
+	// **********************FILTERS***********************
+
+	/*
+	 * String fields : Service/Type/Claim Desc/From/To/Paying Agency/Sicorax
+	 * Code/Auxiliary/Subsidiary
+	 * 
+	 */
+
+	@FXML
+	private TextField inputTextService;
+
+	@FXML
+	private TextField inputTextType;
+
+	@FXML
+	private TextField inputTextClaimDesc;
+
+	@FXML
+	private TextField inputTextFrom;
+
+	@FXML
+	private TextField inputTextTo;
+
+	@FXML
+	private TextField inputTextPayingAgency;
+
+	@FXML
+	private TextField inputTextSicoraxCode;
+
+	@FXML
+	private TextField inputTextAuxiliary;
+
+	@FXML
+	private TextField inputTextSubsidiary;
+
 	@FXML
 	private void initialize() {
 		cmb1.setItems(FXCollections.observableArrayList(new ComboBoxDao().getData()));
@@ -119,7 +155,16 @@ public class Controller {
 
 			financeModuleService.comboBoxValidation(Optional.ofNullable(cmb1.getValue()));
 
-			data = new TableViewDao().getData(dateFrom.getValue(), dateTo.getValue(), cmb1.getValue().getIdAgency());
+			data = new TableViewDao().getData(dateFrom.getValue(), dateTo.getValue(), cmb1.getValue().getIdAgency(),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextService.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextType.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextClaimDesc.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextFrom.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextTo.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextPayingAgency.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSicoraxCode.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextAuxiliary.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSubsidiary.getText())));
 
 			/////////////////////// CREATE TABLE/////////////////////
 
