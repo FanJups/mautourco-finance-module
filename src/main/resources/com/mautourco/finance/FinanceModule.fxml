@@ -156,7 +156,7 @@
       <bottom>
       <HBox alignment="CENTER" prefHeight="49.0" prefWidth="603.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" text="CLOSE" />
+            <Button fx:id="closeBtn" alignment="BOTTOM_CENTER" mnemonicParsing="false" text="CLOSE" onAction="#handleCloseButtonAction" />
             <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" text="PRINT" />
             <Button alignment="CENTER" mnemonicParsing="false" onAction="#validateForm" text="REFRESH" />
          </children>

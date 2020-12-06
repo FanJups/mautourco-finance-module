@@ -13,6 +13,7 @@ import com.mautourco.finance.model.ReservationClaim;
 import com.mautourco.finance.service.FinanceModuleService;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -25,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class Controller {
 
@@ -133,6 +135,9 @@ public class Controller {
 	private TextField inputTextSubsidiary;
 
 	@FXML
+	private Button closeBtn;
+
+	@FXML
 	private void initialize() {
 		cmb1.setItems(FXCollections.observableArrayList(new ComboBoxDao().getData()));
 
@@ -211,6 +216,12 @@ public class Controller {
 
 		}
 
+	}
+
+	@FXML
+	public void handleCloseButtonAction(ActionEvent event) {
+		Stage stage = (Stage) closeBtn.getScene().getWindow();
+		stage.close();
 	}
 
 }
