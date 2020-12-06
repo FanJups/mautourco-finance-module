@@ -54,6 +54,11 @@ public class FinanceModuleService {
 		if (item.isEmpty()) {
 			throw new FinanceModuleException("Please, select an item!");
 
+		} else {
+
+			if (item.get().getName().equals("--Pls Select")) {
+				throw new FinanceModuleException("Please, select an item!");
+			}
 		}
 
 	}

@@ -20,7 +20,7 @@ public class ComboBoxDao {
 		try {
 
 			Connection con = daoFactory.getConnection();
-			String query = "select id_agency, name from agency where active = 1 order by name";
+			String query = "select id_agency, name from agency where active = 1 AND id_agency != 5172 order by name";
 			PreparedStatement statement = con.prepareStatement(query);
 
 			ResultSet set = statement.executeQuery();

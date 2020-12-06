@@ -55,7 +55,7 @@ public class TableViewDao {
 					+ sicoraxCodeFilter + "%\'" + " AND inv_c_center LIKE \'%" + auxiliaryFilter + "%\'"
 					+ " AND inv_subsidiary LIKE \'%" + subsidiaryFilter + "%\'";
 
-			PreparedStatement statement = con.prepareStatement(query);
+			PreparedStatement statement = con.prepareStatement(queryAll);
 
 			ResultSet set = statement.executeQuery();
 

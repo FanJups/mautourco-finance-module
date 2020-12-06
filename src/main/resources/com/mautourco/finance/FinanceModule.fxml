@@ -22,7 +22,7 @@
                  <padding>
                      <Insets left="30.0" right="30.0" />
                  </padding></Label>
-            <ComboBox fx:id="cmb1" maxWidth="400.0" minWidth="400.0" prefHeight="25.0" prefWidth="400.0"  promptText="Pls Select" />
+            <ComboBox fx:id="cmb1" maxWidth="400.0" minWidth="400.0" prefHeight="25.0" prefWidth="400.0"  />
             
             <Label text=""> 
 	            <padding>
