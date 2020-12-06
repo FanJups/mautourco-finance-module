@@ -1,8 +1,11 @@
 package com.mautourco.finance.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import com.mautourco.finance.properties.PropertiesReader;
 
 public class DaoFactory {
 
@@ -15,10 +18,14 @@ public class DaoFactory {
 		return instance;
 	}
 
-	public Connection getConnection() throws SQLException {
+	public Connection getConnection() throws SQLException, IOException {
 
-		Connection con = DriverManager
-				.getConnection("jdbc:mysql://localhost:3306/asterix?useTimezone=true&serverTimezone=UTC", "root", "");
+		PropertiesReader propertiesReader = new PropertiesReader("application.properties");
+		String url = propertiesReader.getProperty("datasource.url");
+		String username = propertiesReader.getProperty("datasource.username");
+		String password = propertiesReader.getProperty("datasource.password");
+
+		Connection con = DriverManager.getConnection(url, username, password);
 
 		return con;
 

@@ -1,5 +1,6 @@
 package com.mautourco.finance.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +36,7 @@ public class ComboBoxDao {
 			// Return the List
 			return options;
 
-		} catch (SQLException ex) {
+		} catch (SQLException | IOException ex) {
 
 			ex.printStackTrace();
 

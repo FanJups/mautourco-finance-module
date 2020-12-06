@@ -1,5 +1,6 @@
 package com.mautourco.finance.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,7 +70,7 @@ public class TableViewDao {
 			// Return the List
 			return reservationClaims;
 
-		} catch (SQLException ex) {
+		} catch (SQLException | IOException ex) {
 
 			ex.printStackTrace();
 
