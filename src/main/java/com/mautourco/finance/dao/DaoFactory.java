@@ -20,14 +20,22 @@ public class DaoFactory {
 
 	public Connection getConnection() throws SQLException, IOException {
 
-		PropertiesReader propertiesReader = new PropertiesReader("application.properties");
-		String url = propertiesReader.getProperty("datasource.url");
-		String username = propertiesReader.getProperty("datasource.username");
-		String password = propertiesReader.getProperty("datasource.password");
+		PropertiesReader propertiesReaderAppProfile;
+		String url;
+		String username;
+		String password;
 
-		Connection con = DriverManager.getConnection(url, username, password);
+		String profile = new PropertiesReader("application.properties").getProperty("profile");
 
-		return con;
+		String appFile = "application-" + profile + ".properties";
+
+		propertiesReaderAppProfile = new PropertiesReader(appFile);
+
+		url = propertiesReaderAppProfile.getProperty("datasource.url");
+		username = propertiesReaderAppProfile.getProperty("datasource.username");
+		password = propertiesReaderAppProfile.getProperty("datasource.password");
+
+		return DriverManager.getConnection(url, username, password);
 
 	}
 
