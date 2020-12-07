@@ -25,6 +25,8 @@ public class App extends Application {
 		primaryStage.setScene(new Scene(loadFXML("FinanceModule"), 1370, 700));
 		primaryStage.setTitle("Finance Module");
 		primaryStage.getIcons().add(new Image(App.class.getResourceAsStream("icons/mautourco2.jpg")));
+
+		primaryStage.getScene().getStylesheets().add(App.class.getResource("styles/styles.css").toExternalForm());
 		primaryStage.show();
 	}
 
