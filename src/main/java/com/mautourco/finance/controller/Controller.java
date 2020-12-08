@@ -176,10 +176,14 @@ public class Controller {
 									|| Optional.ofNullable(item.getServiceType()).isEmpty()
 									|| Optional.ofNullable(item.getType()).isEmpty()) {
 
-								setStyle("-fx-background-color: #ff2a2a;");
+								setStyle("-fx-background-color: #ff8080;");
 
 							} else {
-								// No empty cells
+
+								// No empty cells - No specific highlights
+
+								setStyle("");
+
 							}
 
 						} catch (NullPointerException e) {
