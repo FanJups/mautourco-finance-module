@@ -22,13 +22,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class Controller {
 
@@ -53,8 +51,8 @@ public class Controller {
 	@FXML
 	private TableView<ReservationClaim> tv1;
 
-	@FXML
-	private TableColumn<ReservationClaim, Long> serviceIdCol;
+	// @FXML
+	// private TableColumn<ReservationClaim, Long> serviceIdCol;
 
 	@FXML
 	private TableColumn<ReservationClaim, Long> resaIdCol;
@@ -78,10 +76,34 @@ public class Controller {
 	private TableColumn<ReservationClaim, String> serviceToCol;
 
 	@FXML
-	private TableColumn<ReservationClaim, String> payingAgencyCol;
+	private TableColumn<ReservationClaim, Integer> nghCol;
 
 	@FXML
-	private TableColumn<ReservationClaim, String> invJdeCodeCol;
+	private TableColumn<ReservationClaim, String> claimTypeCol;
+
+	@FXML
+	private TableColumn<ReservationClaim, Integer> adCol;
+
+	@FXML
+	private TableColumn<ReservationClaim, Double> adRateCol;
+
+	@FXML
+	private TableColumn<ReservationClaim, Integer> chCol;
+
+	@FXML
+	private TableColumn<ReservationClaim, Double> chRateCol;
+
+	@FXML
+	private TableColumn<ReservationClaim, Integer> tnCol;
+
+	@FXML
+	private TableColumn<ReservationClaim, Double> tnRateCol;
+
+	@FXML
+	private TableColumn<ReservationClaim, String> currCol;
+
+	@FXML
+	private TableColumn<ReservationClaim, Double> excCol;
 
 	@FXML
 	private TableColumn<ReservationClaim, Double> taxableClaimCol;
@@ -90,24 +112,22 @@ public class Controller {
 	private TableColumn<ReservationClaim, Double> vatCol;
 
 	@FXML
-	private TableColumn<ReservationClaim, String> invCCenterCol;
+	private TableColumn<ReservationClaim, Double> claimTotalAfterDiscCol;
 
 	@FXML
-	private TableColumn<ReservationClaim, Double> claimTotalAfterDiscCol;
+	private TableColumn<ReservationClaim, String> payingAgencyCol;
+
+	@FXML
+	private TableColumn<ReservationClaim, String> invJdeCodeCol;
+
+	@FXML
+	private TableColumn<ReservationClaim, String> invCCenterCol;
 
 	@FXML
 	private TableColumn<ReservationClaim, String> invSubsidiaryCol;
 
 	@FXML
 	private BorderPane borderPane;
-
-	// **********************FILTERS***********************
-
-	/*
-	 * String fields : Service/Type/Claim Desc/From/To/Paying Agency/Sicorax
-	 * Code/Auxiliary/Subsidiary
-	 * 
-	 */
 
 	@FXML
 	private TextField inputTextService;
@@ -137,6 +157,9 @@ public class Controller {
 	private TextField inputTextSubsidiary;
 
 	@FXML
+	private TextField inputTextCurr;
+
+	@FXML
 	private Button closeBtn;
 
 	@FXML
@@ -149,53 +172,7 @@ public class Controller {
 
 		// styling javafx tablerow with null values -> background color : red
 
-		Callback<TableView<ReservationClaim>, TableRow<ReservationClaim>> rowFactory = new Callback<TableView<ReservationClaim>, TableRow<ReservationClaim>>() {
-
-			@Override
-			public TableRow<ReservationClaim> call(TableView<ReservationClaim> l) {
-				return new TableRow<ReservationClaim>() {
-
-					@Override
-					protected void updateItem(ReservationClaim item, boolean empty) {
-						super.updateItem(item, empty);
-
-						try {
-							if (Optional.ofNullable((Double) item.getClaimTotalAfterDisc()).isEmpty()
-									|| Optional.ofNullable((Double) item.getTaxableClaim()).isEmpty()
-									|| Optional.ofNullable((Double) item.getVat()).isEmpty()
-									|| Optional.ofNullable(item.getDateEffected()).isEmpty()
-									|| Optional.ofNullable(item.getDescription()).isEmpty()
-									|| Optional.ofNullable(item.getInvCCenter()).isEmpty()
-									|| Optional.ofNullable(item.getInvJdeCode()).isEmpty()
-									|| Optional.ofNullable(item.getInvSubsidiary()).isEmpty()
-									|| Optional.ofNullable(item.getPayingAgency()).isEmpty()
-									|| Optional.ofNullable(item.getResaId()).isEmpty()
-									|| Optional.ofNullable(item.getServiceFrom()).isEmpty()
-									|| Optional.ofNullable(item.getServiceId()).isEmpty()
-									|| Optional.ofNullable(item.getServiceTo()).isEmpty()
-									|| Optional.ofNullable(item.getServiceType()).isEmpty()
-									|| Optional.ofNullable(item.getType()).isEmpty()) {
-
-								setStyle("-fx-background-color: #ff8080;");
-
-							} else {
-
-								// No empty cells - No specific highlights
-
-								setStyle("");
-
-							}
-
-						} catch (NullPointerException e) {
-
-						}
-
-					}
-				};
-			}
-		};
-
-		tv1.setRowFactory(rowFactory);
+		financeModuleService.stylingRowsWithNullValues(tv1);
 
 		dateFrom.setEditable(false);
 		dateTo.setEditable(false);
@@ -221,11 +198,13 @@ public class Controller {
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextPayingAgency.getText())),
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSicoraxCode.getText())),
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextAuxiliary.getText())),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSubsidiary.getText())));
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSubsidiary.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextCurr.getText())));
 
 			/////////////////////// CREATE TABLE/////////////////////
 
-			serviceIdCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Long>("serviceId"));
+			// serviceIdCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim,
+			// Long>("serviceId"));
 
 			resaIdCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Long>("resaId"));
 
@@ -241,18 +220,38 @@ public class Controller {
 
 			serviceToCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("serviceTo"));
 
-			payingAgencyCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("payingAgency"));
+			nghCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Integer>("ngh"));
 
-			invJdeCodeCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("invJdeCode"));
+			claimTypeCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("claimType"));
+
+			adCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Integer>("ad"));
+
+			adRateCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Double>("adRate"));
+
+			chCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Integer>("ch"));
+
+			chRateCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Double>("chRate"));
+
+			tnCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Integer>("tn"));
+
+			tnRateCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Double>("tnRate"));
+
+			currCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("curr"));
+
+			excCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Double>("exc"));
 
 			taxableClaimCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Double>("taxableClaim"));
 
 			vatCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Double>("vat"));
 
-			invCCenterCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("invCCenter"));
-
 			claimTotalAfterDiscCol
 					.setCellValueFactory(new PropertyValueFactory<ReservationClaim, Double>("claimTotalAfterDisc"));
+
+			payingAgencyCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("payingAgency"));
+
+			invJdeCodeCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("invJdeCode"));
+
+			invCCenterCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("invCCenter"));
 
 			invSubsidiaryCol.setCellValueFactory(new PropertyValueFactory<ReservationClaim, String>("invSubsidiary"));
 

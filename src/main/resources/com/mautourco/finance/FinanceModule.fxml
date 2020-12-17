@@ -43,7 +43,9 @@
    <center>
       <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" fx:id="tv1">
           <columns>
-              <TableColumn fx:id="serviceIdCol" minWidth="70.0" prefWidth="50.0" text="Service ID" />
+
+             <!-- <TableColumn fx:id="serviceIdCol" minWidth="70.0" prefWidth="50.0" text="Service ID" /> -->
+
               <TableColumn fx:id="resaIdCol" minWidth="70.0" prefWidth="50.0" text="Dossier" />
               <TableColumn fx:id="serviceTypeCol" minWidth="100.0" prefWidth="100.0" text="Service" />
               <TableColumn fx:id="typeCol" minWidth="100.0" prefWidth="100.0" text="Type" />
@@ -51,12 +53,22 @@
               <TableColumn fx:id="dateEffectedCol" minWidth="70.0" prefWidth="70.0" text="Date" />
               <TableColumn fx:id="serviceFromCol" minWidth="100.0" prefWidth="100.0" text="From" />
               <TableColumn fx:id="serviceToCol" minWidth="100.0" prefWidth="100.0" text="To" />
+			  <TableColumn fx:id="nghCol" minWidth="50.0" prefWidth="50.0" text="Nights" />
+			  <TableColumn fx:id="claimTypeCol" minWidth="50.0" prefWidth="50.0" text="Claim Type" />
+			  <TableColumn fx:id="adCol" minWidth="50.0" prefWidth="50.0" text="Ad" />
+			  <TableColumn fx:id="adRateCol" minWidth="50.0" prefWidth="50.0" text="Ad Rate" />
+			  <TableColumn fx:id="chCol" minWidth="50.0" prefWidth="50.0" text="Ch" />
+			  <TableColumn fx:id="chRateCol" minWidth="50.0" prefWidth="50.0" text="Ch Rate" />
+			  <TableColumn fx:id="tnCol" minWidth="50.0" prefWidth="50.0" text="Tn" />
+			  <TableColumn fx:id="tnRateCol" minWidth="50.0" prefWidth="50.0" text="Tn Rate" />
+			  <TableColumn fx:id="currCol" minWidth="50.0" prefWidth="50.0" text="Curr" />
+			  <TableColumn fx:id="excCol" minWidth="50.0" prefWidth="50.0" text="Exchange" />
+			  <TableColumn fx:id="taxableClaimCol" minWidth="70.0" prefWidth="70.0" text="Taxable Claim" />
+			  <TableColumn fx:id="vatCol" minWidth="70.0" prefWidth="70.0" text="VAT" />
+			  <TableColumn fx:id="claimTotalAfterDiscCol" minWidth="100.0" prefWidth="100.0" text="Total Claim" />
               <TableColumn fx:id="payingAgencyCol" minWidth="100.0" prefWidth="100.0" text="Paying Agency" />
               <TableColumn fx:id="invJdeCodeCol" minWidth="70.0" prefWidth="70.0" text="Sicorax Code" />
-              <TableColumn fx:id="taxableClaimCol" minWidth="70.0" prefWidth="70.0" text="Taxable Claim" />
-              <TableColumn fx:id="vatCol" minWidth="70.0" prefWidth="70.0" text="VAT" />
               <TableColumn fx:id="invCCenterCol" minWidth="70.0" prefWidth="70.0" text="Auxiliary" />
-              <TableColumn fx:id="claimTotalAfterDiscCol" minWidth="100.0" prefWidth="100.0" text="Total Claim" />
               <TableColumn fx:id="invSubsidiaryCol" minWidth="70.0" prefWidth="70.0" text="Subsidiary" />
           </columns>
       </TableView>
@@ -140,15 +152,19 @@
 	        </Label>
 	   		<TextField fx:id="inputTextAuxiliary" prefWidth="100.0" />
 	   		
-	   		
-	   		
-	   		
 	   		<Label text="Subsidiary">
 	               <padding>
 	                  <Insets left="10.0" bottom="10.0" />
 	               </padding>
 	        </Label>
 	   		<TextField fx:id="inputTextSubsidiary" prefWidth="100.0" />
+
+		   <Label text="Currency">
+			   <padding>
+				   <Insets left="10.0" bottom="10.0" />
+			   </padding>
+		   </Label>
+		   <TextField fx:id="inputTextCurr" prefWidth="100.0" />
 	   
 	   </VBox>
    
