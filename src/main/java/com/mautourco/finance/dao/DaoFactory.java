@@ -7,14 +7,14 @@ import java.sql.SQLException;
 
 import com.mautourco.finance.properties.PropertiesReader;
 
-public class DaoFactory {
+public class DAOFactory {
 
-	private static DaoFactory instance = new DaoFactory();
+	private static DAOFactory instance = new DAOFactory();
 
-	private DaoFactory() {
+	private DAOFactory() {
 	}
 
-	public static DaoFactory getInstance() {
+	public static DAOFactory getInstance() {
 		return instance;
 	}
 

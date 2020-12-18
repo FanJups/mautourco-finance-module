@@ -40,13 +40,6 @@ public class ReservationClaim implements Serializable {
 	private final SimpleStringProperty invCCenter;
 	private final SimpleStringProperty invSubsidiary;
 
-	// public ReservationClaim(Long serviceId, Long resaId, String serviceType,
-	// String type, String description,
-	// Date dateEffected, String serviceFrom, String serviceTo, String payingAgency,
-	// String invJdeCode,
-	// double taxableClaim, double claimTotalAfterDisc, double vat, String
-	// invCCenter, String invSubsidiary) {
-
 	public ReservationClaim(Long resaId, String serviceType, String type, String description, Date dateEffected,
 			String serviceFrom, String serviceTo, Integer ngh, String claimType, Integer ad, double adRate, Integer ch,
 			double chRate, Integer tn, double tnRate, String curr, double exc, double taxableClaim, double vat,

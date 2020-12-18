@@ -1,6 +1,7 @@
 package com.mautourco.finance.controller;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,6 @@ import com.mautourco.finance.model.ReservationClaim;
 import com.mautourco.finance.service.FinanceModuleService;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -26,7 +26,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 public class Controller {
 
@@ -199,7 +198,7 @@ public class Controller {
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSicoraxCode.getText())),
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextAuxiliary.getText())),
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSubsidiary.getText())),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextCurr.getText())));
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextCurr.getText())), true);
 
 			/////////////////////// CREATE TABLE/////////////////////
 
@@ -272,9 +271,66 @@ public class Controller {
 	}
 
 	@FXML
-	public void handleCloseButtonAction(ActionEvent event) {
-		Stage stage = (Stage) closeBtn.getScene().getWindow();
-		stage.close();
+	public void handleCloseButtonAction() {
+
+		try {
+
+			new TableViewDao().getData().stream().forEach(r -> {
+
+				try {
+					new TableViewDao().generateInvoiceNo(r);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			});
+
+			Alert alertgenerateInvoiceNo = new Alert(AlertType.INFORMATION);
+			alertgenerateInvoiceNo.setTitle("SUCCESS");
+			alertgenerateInvoiceNo
+					.setHeaderText("Generating Invoice Number and Updating reservation_claim table done successfully.");
+			// alert.setContentText(e.getMessage());
+			alertgenerateInvoiceNo.showAndWait();
+
+			financeModuleService.datePickerValidationDateFrom(Optional.ofNullable(dateFrom.getValue()));
+
+			financeModuleService.datePickerValidationDateTo(Optional.ofNullable(dateTo.getValue()));
+
+			financeModuleService.comboBoxValidation(Optional.ofNullable(cmb1.getValue()));
+
+			List<ReservationClaim> dataWithNoNullValues = new TableViewDao().getData(dateFrom.getValue(),
+					dateTo.getValue(), cmb1.getValue().getIdAgency(),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextService.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextType.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextClaimDesc.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextFrom.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextTo.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextPayingAgency.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSicoraxCode.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextAuxiliary.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSubsidiary.getText())),
+					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextCurr.getText())), false);
+
+			dataWithNoNullValues.stream().forEach(
+					reservationClaim -> new TableViewDao().updateCloseFromZeroToOne(reservationClaim.getResaId()));
+
+			Alert alertupdateCloseFromZeroToOne = new Alert(AlertType.INFORMATION);
+			alertupdateCloseFromZeroToOne.setTitle("SUCCESS");
+			alertupdateCloseFromZeroToOne.setHeaderText("Updating reservation table done successfully.");
+			// alert.setContentText(e.getMessage());
+			alertupdateCloseFromZeroToOne.showAndWait();
+
+		} catch (FinanceModuleException e) {
+
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("ERROR");
+			alert.setHeaderText(e.getMessage());
+			// alert.setContentText(e.getMessage());
+			alert.showAndWait();
+
+		}
+
 	}
 
 }

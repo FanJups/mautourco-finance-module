@@ -7,6 +7,12 @@ public class ComboBoxItem implements Serializable {
 	private int idAgency;
 	private String name;
 
+	public ComboBoxItem(int idAgency, String name) {
+
+		this.idAgency = idAgency;
+		this.name = name;
+	}
+
 	public int getIdAgency() {
 		return idAgency;
 	}

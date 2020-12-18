@@ -12,7 +12,7 @@ import com.mautourco.finance.model.ComboBoxItem;
 
 public class ComboBoxDao {
 
-	private DaoFactory daoFactory = DaoFactory.getInstance();
+	private DAOFactory daoFactory = DAOFactory.getInstance();
 
 	public List<ComboBoxItem> getData() {
 
@@ -46,13 +46,7 @@ public class ComboBoxDao {
 
 	private ComboBoxItem map(ResultSet set) throws SQLException {
 
-		ComboBoxItem comboBoxItem = new ComboBoxItem();
-
-		comboBoxItem.setIdAgency(set.getInt("id_agency"));
-
-		comboBoxItem.setName(set.getString("name"));
-
-		return comboBoxItem;
+		return new ComboBoxItem(set.getInt("id_agency"), set.getString("name"));
 
 	}
 
