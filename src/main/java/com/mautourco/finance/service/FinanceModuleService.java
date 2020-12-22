@@ -1,6 +1,5 @@
 package com.mautourco.finance.service;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -181,7 +180,7 @@ public class FinanceModuleService {
 
 	public void generateInvoiceNo() {
 
-		new TableViewDao().getData().stream().forEach(TableViewDao::generateInvoiceNo);
+		tableViewDao.getData().parallelStream().forEach(TableViewDao::generateInvoiceNo);
 
 	}
 
@@ -198,69 +197,25 @@ public class FinanceModuleService {
 
 	public void insertIntoSico(LocalDate dateFrom, LocalDate dateTo) {
 
-		tableViewDao.getDataSicoInt(dateFrom, dateTo).parallelStream().forEach(s ->
-
-		{
-			try {
-				new TableViewDao().insertIntoSico(s);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		);
+		tableViewDao.getDataSicoInt(dateFrom, dateTo).parallelStream().forEach(TableViewDao::insertIntoSico);
 
 	}
 
 	public void insertIntoSintercl(LocalDate dateFrom, LocalDate dateTo) {
 
-		tableViewDao.getDataSintercl(dateFrom, dateTo).parallelStream().forEach(s ->
-
-		{
-			try {
-				new TableViewDao().insertIntoSintercl(s);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		);
+		tableViewDao.getDataSintercl(dateFrom, dateTo).parallelStream().forEach(TableViewDao::insertIntoSintercl);
 
 	}
 
 	public void insertIntoSintercl2(LocalDate dateFrom, LocalDate dateTo) {
 
-		tableViewDao.getDataSintercl2(dateFrom, dateTo).parallelStream().forEach(s ->
-
-		{
-			try {
-				new TableViewDao().insertIntoSintercl2(s);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		);
+		tableViewDao.getDataSintercl2(dateFrom, dateTo).parallelStream().forEach(TableViewDao::insertIntoSintercl2);
 
 	}
 
 	public void insertIntoSintercl3(LocalDate dateFrom, LocalDate dateTo) {
 
-		tableViewDao.getDataSintercl3(dateFrom, dateTo).parallelStream().forEach(s ->
-
-		{
-			try {
-				new TableViewDao().insertIntoSintercl3(s);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		);
+		tableViewDao.getDataSintercl3(dateFrom, dateTo).parallelStream().forEach(TableViewDao::insertIntoSintercl3);
 
 	}
 
@@ -269,18 +224,8 @@ public class FinanceModuleService {
 	}
 
 	public void insertIntoSacTransactionImport(LocalDate dateFrom, LocalDate dateTo) {
-		tableViewDao.getDataSacTransactionImport(dateFrom, dateTo).parallelStream().forEach(s ->
-
-		{
-			try {
-				new TableViewDao().insertIntoSacTransactionImport(s);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		);
+		tableViewDao.getDataSacTransactionImport(dateFrom, dateTo).parallelStream()
+				.forEach(TableViewDao::insertIntoSacTransactionImport);
 	}
 
 }

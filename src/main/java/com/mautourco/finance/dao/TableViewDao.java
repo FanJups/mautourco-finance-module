@@ -175,7 +175,7 @@ public class TableViewDao {
 			else
 				System.err.println("updateCloseFromZeroToOne UPDATE FOR " + resaId);
 
-			statement.close();
+			// con.commit();
 
 		} catch (SQLException ex) {
 
@@ -223,6 +223,8 @@ public class TableViewDao {
 				System.err.println("Invoice creation failed, no auto-generated value");
 
 			}
+
+			// con.commit();
 
 		} catch (SQLException e) {
 
@@ -483,7 +485,7 @@ public class TableViewDao {
 					+ "rcl.clients AS clients, " + "rcl.claim_currency AS claimCurrency, "
 					+ "SUM(rcl.claim_total_after_disc) AS netAmount, " + "SUM(rcl.taxable_claim) AS taxableAmt, "
 					+ "(SUM(rcl.claim_total_after_disc)-SUM(rcl.taxable_claim)) AS vat, "
-					+ "rcl.exchange_rate AS echangeRate, " + "rcl.invoice_no AS invoiceNo, "
+					+ "rcl.exchange_rate AS exchangeRate, " + "rcl.invoice_no AS invoiceNo, "
 					+ "rcl.date_invoiced AS dateInvoiced, " + "rcl.active AS active, "
 					+ "rcl.inv_jde_code AS sico_code, " + "agency.name AS agency, " + "rcl.inv_doc_type AS docType, "
 					+ "rcl.inv_curr_type AS currType, " + "rcl.inv_c_center AS cCenter, "
@@ -578,7 +580,7 @@ public class TableViewDao {
 
 	}
 
-	public void insertIntoSico(SicoInt s) throws SQLException {
+	public static void insertIntoSico(SicoInt s) {
 
 		Connection con = null;
 		PreparedStatement preparedStatement = null;
@@ -612,6 +614,8 @@ public class TableViewDao {
 
 			}
 
+			// con.commit();
+
 		} catch (SQLException e) {
 
 			try {
@@ -630,7 +634,7 @@ public class TableViewDao {
 
 	}
 
-	public void insertIntoSintercl(Sintercl s) throws SQLException {
+	public static void insertIntoSintercl(Sintercl s) {
 
 		Connection con = null;
 		PreparedStatement preparedStatement = null;
@@ -663,6 +667,8 @@ public class TableViewDao {
 
 			}
 
+			// con.commit();
+
 		} catch (SQLException e) {
 
 			try {
@@ -680,7 +686,7 @@ public class TableViewDao {
 
 	}
 
-	public void insertIntoSintercl2(Sintercl s) throws SQLException {
+	public static void insertIntoSintercl2(Sintercl s) {
 
 		Connection con = null;
 		PreparedStatement preparedStatement = null;
@@ -712,6 +718,8 @@ public class TableViewDao {
 
 			}
 
+			// con.commit();
+
 		} catch (SQLException e) {
 
 			try {
@@ -729,7 +737,7 @@ public class TableViewDao {
 
 	}
 
-	public void insertIntoSintercl3(Sintercl s) throws SQLException {
+	public static void insertIntoSintercl3(Sintercl s) {
 
 		Connection con = null;
 		PreparedStatement preparedStatement = null;
@@ -761,6 +769,8 @@ public class TableViewDao {
 
 			}
 
+			// con.commit();
+
 		} catch (SQLException e) {
 
 			try {
@@ -778,7 +788,7 @@ public class TableViewDao {
 
 	}
 
-	public void insertIntoSacTransactionImport(SacTransactionImport s) throws SQLException {
+	public static void insertIntoSacTransactionImport(SacTransactionImport s) {
 
 		Connection con = null;
 		PreparedStatement preparedStatement = null;
@@ -813,6 +823,7 @@ public class TableViewDao {
 
 			}
 
+			// con.commit();
 		} catch (SQLException e) {
 
 			try {
@@ -850,6 +861,8 @@ public class TableViewDao {
 			else
 				System.err.println(" updateSicoInt UPDATE FOR ");
 
+			// con.commit();
+
 		} catch (SQLException ex) {
 
 			try {
@@ -866,7 +879,7 @@ public class TableViewDao {
 
 	}
 
-	private void updateSintercl(String batch) {
+	private static void updateSintercl(String batch) {
 
 		Connection con = null;
 
@@ -885,6 +898,8 @@ public class TableViewDao {
 				System.err.println(" updateSintercl NO UPDATE FOR " + batch);
 			else
 				System.err.println(" updateSintercl UPDATE FOR " + batch);
+
+			// con.commit();
 
 		} catch (SQLException ex) {
 
@@ -910,6 +925,8 @@ public class TableViewDao {
 
 		try {
 
+			System.err.println(getInvHeader(invoiceNo));
+
 			String query = "UPDATE reservation_claim SET invoice_no = " + invoiceNo + ", date_invoiced = \'"
 					+ getInvHeader(invoiceNo).getInvDate() + "\'" + " WHERE resa_id = "
 					+ getInvHeader(invoiceNo).getResaId() + " AND claim_currency = " + "\'"
@@ -921,9 +938,11 @@ public class TableViewDao {
 			int status = statement.executeUpdate();
 
 			if (status == 0)
-				System.err.println(" updateReservationClaimInvoiceNoNO UPDATE FOR " + invoiceNo);
+				System.err.println(" updateReservationClaimInvoiceNo NO UPDATE FOR " + invoiceNo);
 			else
 				System.err.println(" updateReservationClaimInvoiceNo UPDATE FOR " + invoiceNo);
+
+			// con.commit();
 
 		} catch (SQLException ex) {
 
@@ -941,7 +960,7 @@ public class TableViewDao {
 
 	}
 
-	private void updateReservationClaimInvoiceNoSicoInt(Long invoiceNo) {
+	private static void updateReservationClaimInvoiceNoSicoInt(Long invoiceNo) {
 
 		Connection con = null;
 
@@ -962,6 +981,8 @@ public class TableViewDao {
 				System.err.println(" updateReservationClaimInvoiceNoSicoInt NO UPDATE FOR " + invoiceNo);
 			else
 				System.err.println(" updateReservationClaimInvoiceNoSicoInt UPDATE FOR " + invoiceNo);
+
+			// con.commit();
 
 		} catch (SQLException ex) {
 
@@ -1000,8 +1021,11 @@ public class TableViewDao {
 			set = statement.executeQuery();
 
 			while (set.next()) {
-				invHeader = new InvHeader(set.getDate("inv_date"), set.getLong("resa_id"), set.getString("currency"),
-						set.getLong("id_paidby"));
+
+				invHeader.setInvDate(set.getDate("inv_date"));
+				invHeader.setResaId(set.getLong("resa_id"));
+				invHeader.setCurrency(set.getString("currency"));
+				invHeader.setIdPaidBy(set.getLong("id_paidby"));
 			}
 
 		} catch (SQLException ex) {

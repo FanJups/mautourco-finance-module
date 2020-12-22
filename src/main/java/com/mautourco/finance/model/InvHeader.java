@@ -54,4 +54,10 @@ public class InvHeader implements Serializable {
 		this.idPaidBy = idPaidBy;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("InvHeader [invDate=%s, resaId=%s, currency=%s, idPaidBy=%s]", invDate, resaId, currency,
+				idPaidBy);
+	}
+
 }
