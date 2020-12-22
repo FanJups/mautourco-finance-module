@@ -1,11 +1,15 @@
 package com.mautourco.finance.service;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Optional;
 
+import com.mautourco.finance.dao.ComboBoxDao;
+import com.mautourco.finance.dao.TableViewDao;
 import com.mautourco.finance.exception.FinanceModuleException;
 import com.mautourco.finance.model.ComboBoxItem;
 import com.mautourco.finance.model.ReservationClaim;
@@ -16,7 +20,10 @@ import javafx.util.Callback;
 
 public class FinanceModuleService {
 
-	public void datePickerValidationDateFrom(Optional<LocalDate> date) throws FinanceModuleException {
+	private TableViewDao tableViewDao = new TableViewDao();
+	private ComboBoxDao comboBoxDao = new ComboBoxDao();
+
+	private void datePickerValidationDateFrom(Optional<LocalDate> date) throws FinanceModuleException {
 
 		if (date.isEmpty()) {
 			throw new FinanceModuleException("Please, select Date From!");
@@ -35,7 +42,7 @@ public class FinanceModuleService {
 
 	}
 
-	public void datePickerValidationDateTo(Optional<LocalDate> date) throws FinanceModuleException {
+	private void datePickerValidationDateTo(Optional<LocalDate> date) throws FinanceModuleException {
 
 		if (date.isEmpty()) {
 			throw new FinanceModuleException("Please, select Date To!");
@@ -54,13 +61,21 @@ public class FinanceModuleService {
 
 	}
 
-	public void comboBoxValidation(Optional<ComboBoxItem> item) throws FinanceModuleException {
+	private void comboBoxValidation(Optional<ComboBoxItem> item) throws FinanceModuleException {
 
 		if (item.isEmpty()) {
 			throw new FinanceModuleException("Please, select an item!");
 
 		}
 
+	}
+
+	public void validation(Optional<LocalDate> dateFrom, Optional<LocalDate> dateTo, Optional<ComboBoxItem> item)
+			throws FinanceModuleException {
+
+		datePickerValidationDateFrom(dateFrom);
+		datePickerValidationDateTo(dateTo);
+		comboBoxValidation(item);
 	}
 
 	public String textFieldValidation(Optional<String> value) {
@@ -148,6 +163,133 @@ public class FinanceModuleService {
 		}
 
 		return false;
+	}
+
+	public List<ComboBoxItem> getComboBoxItems() {
+		return comboBoxDao.getData();
+	}
+
+	public List<ReservationClaim> getReservationClaims(LocalDate dateFrom, LocalDate dateTo, int idAgency,
+			String serviceFilter, String typeFilter, String claimDescFilter, String fromFilter, String toFilter,
+			String payingAgencyFilter, String sicoraxCodeFilter, String auxiliaryFilter, String subsidiaryFilter,
+			String currFilter, boolean containsNullValues) {
+
+		return tableViewDao.getData(dateFrom, dateTo, idAgency, serviceFilter, typeFilter, claimDescFilter, fromFilter,
+				toFilter, payingAgencyFilter, sicoraxCodeFilter, auxiliaryFilter, subsidiaryFilter, currFilter,
+				containsNullValues);
+	}
+
+	public void generateInvoiceNo() {
+		tableViewDao.getData().stream().forEach(r ->
+
+		{
+			try {
+				new TableViewDao().generateInvoiceNo(r);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		);
+	}
+
+	public void updateCloseFromZeroToOne(LocalDate dateFrom, LocalDate dateTo, int idAgency, String serviceFilter,
+			String typeFilter, String claimDescFilter, String fromFilter, String toFilter, String payingAgencyFilter,
+			String sicoraxCodeFilter, String auxiliaryFilter, String subsidiaryFilter, String currFilter,
+			boolean containsNullValues) {
+		List<ReservationClaim> dataWithNoNullValues = getReservationClaims(dateFrom, dateTo, idAgency, serviceFilter,
+				typeFilter, claimDescFilter, fromFilter, toFilter, payingAgencyFilter, sicoraxCodeFilter,
+				auxiliaryFilter, subsidiaryFilter, currFilter, containsNullValues);
+
+		dataWithNoNullValues.stream().forEach(r -> new TableViewDao().updateCloseFromZeroToOne(r.getResaId()));
+	}
+
+	public void insertIntoSico(LocalDate dateFrom, LocalDate dateTo) {
+
+		tableViewDao.getDataSicoInt(dateFrom, dateTo).stream().forEach(s ->
+
+		{
+			try {
+				new TableViewDao().insertIntoSico(s);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		);
+
+	}
+
+	public void insertIntoSintercl(LocalDate dateFrom, LocalDate dateTo) {
+
+		tableViewDao.getDataSintercl(dateFrom, dateTo).stream().forEach(s ->
+
+		{
+			try {
+				new TableViewDao().insertIntoSintercl(s);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		);
+
+	}
+
+	public void insertIntoSintercl2(LocalDate dateFrom, LocalDate dateTo) {
+
+		tableViewDao.getDataSintercl2(dateFrom, dateTo).stream().forEach(s ->
+
+		{
+			try {
+				new TableViewDao().insertIntoSintercl2(s);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		);
+
+	}
+
+	public void insertIntoSintercl3(LocalDate dateFrom, LocalDate dateTo) {
+
+		tableViewDao.getDataSintercl3(dateFrom, dateTo).stream().forEach(s ->
+
+		{
+			try {
+				new TableViewDao().insertIntoSintercl3(s);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		);
+
+	}
+
+	public void updateSicoInt() {
+		tableViewDao.updateSicoInt();
+	}
+
+	public void insertIntoSacTransactionImport(LocalDate dateFrom, LocalDate dateTo) {
+		tableViewDao.getDataSacTransactionImport(dateFrom, dateTo).stream().forEach(s ->
+
+		{
+			try {
+				new TableViewDao().insertIntoSacTransactionImport(s);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		);
 	}
 
 }

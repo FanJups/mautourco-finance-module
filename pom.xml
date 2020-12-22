@@ -27,8 +27,15 @@
 		    <version>8.0.21</version>
 		</dependency>
 		
-	
-        
+		<!-- Connection Pool -->
+		
+		<dependency>
+		    <groupId>com.zaxxer</groupId>
+		    <artifactId>HikariCP</artifactId>
+		    <version>2.4.7</version>
+		    
+		</dependency>
+		        
     </dependencies>
     <build>
         <plugins>

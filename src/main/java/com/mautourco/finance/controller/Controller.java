@@ -1,12 +1,9 @@
 package com.mautourco.finance.controller;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import com.mautourco.finance.dao.ComboBoxDao;
-import com.mautourco.finance.dao.TableViewDao;
 import com.mautourco.finance.event.AutoCompleteBox;
 import com.mautourco.finance.exception.FinanceModuleException;
 import com.mautourco.finance.model.ComboBoxItem;
@@ -28,10 +25,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 
 public class Controller {
-
-	public final int ROWS_PER_PAGE = 2;
-
-	private List<ReservationClaim> data;
 
 	private FinanceModuleService financeModuleService = new FinanceModuleService();
 
@@ -163,7 +156,7 @@ public class Controller {
 
 	@FXML
 	private void initialize() {
-		cmb1.setItems(FXCollections.observableArrayList(new ComboBoxDao().getData()));
+		cmb1.setItems(FXCollections.observableArrayList(financeModuleService.getComboBoxItems()));
 
 		new AutoCompleteBox(cmb1);
 
@@ -182,13 +175,11 @@ public class Controller {
 	private void validateForm() {
 
 		try {
-			financeModuleService.datePickerValidationDateFrom(Optional.ofNullable(dateFrom.getValue()));
+			financeModuleService.validation(Optional.ofNullable(dateFrom.getValue()),
+					Optional.ofNullable(dateTo.getValue()), Optional.ofNullable(cmb1.getValue()));
 
-			financeModuleService.datePickerValidationDateTo(Optional.ofNullable(dateTo.getValue()));
-
-			financeModuleService.comboBoxValidation(Optional.ofNullable(cmb1.getValue()));
-
-			data = new TableViewDao().getData(dateFrom.getValue(), dateTo.getValue(), cmb1.getValue().getIdAgency(),
+			List<ReservationClaim> data = financeModuleService.getReservationClaims(dateFrom.getValue(),
+					dateTo.getValue(), cmb1.getValue().getIdAgency(),
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextService.getText())),
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextType.getText())),
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextClaimDesc.getText())),
@@ -271,20 +262,14 @@ public class Controller {
 	}
 
 	@FXML
-	public void handleCloseButtonAction() {
+	private void handleCloseButtonAction() {
 
 		try {
 
-			new TableViewDao().getData().stream().forEach(r -> {
+			financeModuleService.validation(Optional.ofNullable(dateFrom.getValue()),
+					Optional.ofNullable(dateTo.getValue()), Optional.ofNullable(cmb1.getValue()));
 
-				try {
-					new TableViewDao().generateInvoiceNo(r);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			});
+			financeModuleService.generateInvoiceNo();
 
 			Alert alertgenerateInvoiceNo = new Alert(AlertType.INFORMATION);
 			alertgenerateInvoiceNo.setTitle("SUCCESS");
@@ -293,14 +278,8 @@ public class Controller {
 			// alert.setContentText(e.getMessage());
 			alertgenerateInvoiceNo.showAndWait();
 
-			financeModuleService.datePickerValidationDateFrom(Optional.ofNullable(dateFrom.getValue()));
-
-			financeModuleService.datePickerValidationDateTo(Optional.ofNullable(dateTo.getValue()));
-
-			financeModuleService.comboBoxValidation(Optional.ofNullable(cmb1.getValue()));
-
-			List<ReservationClaim> dataWithNoNullValues = new TableViewDao().getData(dateFrom.getValue(),
-					dateTo.getValue(), cmb1.getValue().getIdAgency(),
+			financeModuleService.updateCloseFromZeroToOne(dateFrom.getValue(), dateTo.getValue(),
+					cmb1.getValue().getIdAgency(),
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextService.getText())),
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextType.getText())),
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextClaimDesc.getText())),
@@ -312,14 +291,60 @@ public class Controller {
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSubsidiary.getText())),
 					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextCurr.getText())), false);
 
-			dataWithNoNullValues.stream().forEach(
-					reservationClaim -> new TableViewDao().updateCloseFromZeroToOne(reservationClaim.getResaId()));
-
 			Alert alertupdateCloseFromZeroToOne = new Alert(AlertType.INFORMATION);
 			alertupdateCloseFromZeroToOne.setTitle("SUCCESS");
 			alertupdateCloseFromZeroToOne.setHeaderText("Updating reservation table done successfully.");
 			// alert.setContentText(e.getMessage());
 			alertupdateCloseFromZeroToOne.showAndWait();
+
+			financeModuleService.insertIntoSico(dateFrom.getValue(), dateTo.getValue());
+
+			Alert alertSicoInt = new Alert(AlertType.INFORMATION);
+			alertSicoInt.setTitle("SUCCESS");
+			alertSicoInt.setHeaderText("Inserting data in sico_int table done successfully.");
+			// alert.setContentText(e.getMessage());
+			alertSicoInt.showAndWait();
+
+			financeModuleService.insertIntoSintercl(dateFrom.getValue(), dateTo.getValue());
+
+			Alert alertSintercl = new Alert(AlertType.INFORMATION);
+			alertSintercl.setTitle("SUCCESS");
+			alertSintercl.setHeaderText("Inserting data in sintercl table done successfully.");
+			// alert.setContentText(e.getMessage());
+			alertSintercl.showAndWait();
+
+			financeModuleService.insertIntoSintercl2(dateFrom.getValue(), dateTo.getValue());
+
+			Alert alertSintercl2 = new Alert(AlertType.INFORMATION);
+			alertSintercl2.setTitle("SUCCESS");
+			alertSintercl2.setHeaderText("(2) Inserting data in sintercl table done successfully.");
+			// alert.setContentText(e.getMessage());
+			alertSintercl2.showAndWait();
+
+			financeModuleService.insertIntoSintercl3(dateFrom.getValue(), dateTo.getValue());
+
+			Alert alertSintercl3 = new Alert(AlertType.INFORMATION);
+			alertSintercl3.setTitle("SUCCESS");
+			alertSintercl3.setHeaderText("(3) Inserting data in sintercl table done successfully.");
+			// alert.setContentText(e.getMessage());
+			alertSintercl3.showAndWait();
+
+			financeModuleService.updateSicoInt();
+
+			Alert alertupdateSicoInt = new Alert(AlertType.INFORMATION);
+			alertupdateSicoInt.setTitle("SUCCESS");
+			alertupdateSicoInt.setHeaderText("(3) Updating data in sico_int table done successfully.");
+			// alert.setContentText(e.getMessage());
+			alertupdateSicoInt.showAndWait();
+
+			financeModuleService.insertIntoSacTransactionImport(dateFrom.getValue(), dateTo.getValue());
+
+			Alert alertSacTransactionImport = new Alert(AlertType.INFORMATION);
+			alertSacTransactionImport.setTitle("SUCCESS");
+			alertSacTransactionImport
+					.setHeaderText("Inserting data in sac_transaction_import table done successfully.");
+			// alert.setContentText(e.getMessage());
+			alertSacTransactionImport.showAndWait();
 
 		} catch (FinanceModuleException e) {
 
