@@ -1,6 +1,7 @@
 package com.mautourco.finance.dao;
 
-import java.io.IOException;
+import static com.mautourco.finance.dao.DAOUtils.close;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,31 +18,39 @@ public class ComboBoxDao {
 	public List<ComboBoxItem> getData() {
 
 		List<ComboBoxItem> options = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet set = null;
 
 		try {
 
-			Connection con = daoFactory.getConnection();
+			con = daoFactory.getConnection();
 			String query = "select id_agency, name from agency where active = 1 order by name";
-			PreparedStatement statement = con.prepareStatement(query);
+			statement = con.prepareStatement(query);
 
-			ResultSet set = statement.executeQuery();
+			set = statement.executeQuery();
 
 			while (set.next()) {
 				options.add(map(set));
 			}
 
-			statement.close();
-			set.close();
+		} catch (SQLException ex) {
 
-			// Return the List
-			return options;
-
-		} catch (SQLException | IOException ex) {
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 
 			ex.printStackTrace();
 
-			return null;
+		} finally {
+
+			close(set, statement, con);
+
 		}
+
+		return options;
 	}
 
 	private ComboBoxItem map(ResultSet set) throws SQLException {

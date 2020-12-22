@@ -4,6 +4,7 @@ module com.mautourco.finance {
 	requires java.sql;
 	requires javafx.base;
 	requires javafx.graphics;
+	requires HikariCP;
 
 	opens com.mautourco.finance to javafx.fxml;
 	opens com.mautourco.finance.controller to javafx.fxml;

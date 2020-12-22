@@ -333,4 +333,13 @@ public class ReservationClaim implements Serializable {
 		this.invSubsidiary.set(invSubsidiary);
 	}
 
+	@Override
+	public String toString() {
+		return String.format(
+				"ReservationClaim [resaId=%s, serviceType=%s, type=%s, description=%s, dateEffected=%s, serviceFrom=%s, serviceTo=%s, ngh=%s, claimType=%s, ad=%s, adRate=%s, ch=%s, chRate=%s, tn=%s, tnRate=%s, curr=%s, exc=%s, taxableClaim=%s, vat=%s, claimTotalAfterDisc=%s, payingAgency=%s, invJdeCode=%s, invCCenter=%s, invSubsidiary=%s]",
+				resaId, serviceType, type, description, dateEffected, serviceFrom, serviceTo, ngh, claimType, ad,
+				adRate, ch, chRate, tn, tnRate, curr, exc, taxableClaim, vat, claimTotalAfterDisc, payingAgency,
+				invJdeCode, invCCenter, invSubsidiary);
+	}
+
 }

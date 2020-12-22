@@ -10,6 +10,10 @@ public class InvHeader implements Serializable {
 	private String currency;
 	private Long idPaidBy;
 
+	public InvHeader() {
+
+	}
+
 	public InvHeader(Date invDate, Long resaId, String currency, Long idPaidBy) {
 
 		this.invDate = invDate;
