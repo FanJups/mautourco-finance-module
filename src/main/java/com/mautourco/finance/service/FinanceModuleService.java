@@ -180,7 +180,7 @@ public class FinanceModuleService {
 
 	public void generateInvoiceNo() {
 
-		tableViewDao.getData().parallelStream().forEach(TableViewDao::generateInvoiceNo);
+		tableViewDao.getData().stream().forEach(TableViewDao::generateInvoiceNo);
 
 	}
 
@@ -192,30 +192,30 @@ public class FinanceModuleService {
 				typeFilter, claimDescFilter, fromFilter, toFilter, payingAgencyFilter, sicoraxCodeFilter,
 				auxiliaryFilter, subsidiaryFilter, currFilter, containsNullValues);
 
-		dataWithNoNullValues.parallelStream().forEach(r -> new TableViewDao().updateCloseFromZeroToOne(r.getResaId()));
+		dataWithNoNullValues.stream().forEach(r -> new TableViewDao().updateCloseFromZeroToOne(r.getResaId()));
 	}
 
 	public void insertIntoSico(LocalDate dateFrom, LocalDate dateTo) {
 
-		tableViewDao.getDataSicoInt(dateFrom, dateTo).parallelStream().forEach(TableViewDao::insertIntoSico);
+		tableViewDao.getDataSicoInt(dateFrom, dateTo).stream().forEach(TableViewDao::insertIntoSico);
 
 	}
 
 	public void insertIntoSintercl(LocalDate dateFrom, LocalDate dateTo) {
 
-		tableViewDao.getDataSintercl(dateFrom, dateTo).parallelStream().forEach(TableViewDao::insertIntoSintercl);
+		tableViewDao.getDataSintercl(dateFrom, dateTo).stream().forEach(TableViewDao::insertIntoSintercl);
 
 	}
 
 	public void insertIntoSintercl2(LocalDate dateFrom, LocalDate dateTo) {
 
-		tableViewDao.getDataSintercl2(dateFrom, dateTo).parallelStream().forEach(TableViewDao::insertIntoSintercl2);
+		tableViewDao.getDataSintercl2(dateFrom, dateTo).stream().forEach(TableViewDao::insertIntoSintercl2);
 
 	}
 
 	public void insertIntoSintercl3(LocalDate dateFrom, LocalDate dateTo) {
 
-		tableViewDao.getDataSintercl3(dateFrom, dateTo).parallelStream().forEach(TableViewDao::insertIntoSintercl3);
+		tableViewDao.getDataSintercl3(dateFrom, dateTo).stream().forEach(TableViewDao::insertIntoSintercl3);
 
 	}
 
@@ -224,7 +224,7 @@ public class FinanceModuleService {
 	}
 
 	public void insertIntoSacTransactionImport(LocalDate dateFrom, LocalDate dateTo) {
-		tableViewDao.getDataSacTransactionImport(dateFrom, dateTo).parallelStream()
+		tableViewDao.getDataSacTransactionImport(dateFrom, dateTo).stream()
 				.forEach(TableViewDao::insertIntoSacTransactionImport);
 	}
 

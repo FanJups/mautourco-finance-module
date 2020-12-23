@@ -48,7 +48,7 @@ public class DAOFactory {
 			config.setJdbcUrl(url);
 			config.setUsername(username);
 			config.setPassword(password);
-			config.setAutoCommit(true);
+			config.setAutoCommit(false);
 			// config.setMinimumIdle(100);
 			// config.setMaximumPoolSize(1000);
 			config.addDataSourceProperty("cachePrepStmts", "true");

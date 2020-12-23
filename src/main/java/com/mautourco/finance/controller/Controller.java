@@ -272,7 +272,6 @@ public class Controller {
 			Alert alertStart = new Alert(AlertType.INFORMATION);
 			alertStart.setTitle("Starting Operations");
 			alertStart.setHeaderText("Please, be patient while the process is going on.");
-			// alert.setContentText(e.getMessage());
 			alertStart.showAndWait();
 
 			financeModuleService.generateInvoiceNo();
@@ -281,7 +280,6 @@ public class Controller {
 			alertgenerateInvoiceNo.setTitle("SUCCESS");
 			alertgenerateInvoiceNo
 					.setHeaderText("Generating Invoice Number and Updating reservation_claim table done successfully.");
-			// alert.setContentText(e.getMessage());
 			alertgenerateInvoiceNo.showAndWait();
 
 			financeModuleService.updateCloseFromZeroToOne(dateFrom.getValue(), dateTo.getValue(),
@@ -290,7 +288,6 @@ public class Controller {
 			Alert alertupdateCloseFromZeroToOne = new Alert(AlertType.INFORMATION);
 			alertupdateCloseFromZeroToOne.setTitle("SUCCESS");
 			alertupdateCloseFromZeroToOne.setHeaderText("Updating reservation table done successfully.");
-			// alert.setContentText(e.getMessage());
 			alertupdateCloseFromZeroToOne.showAndWait();
 
 			financeModuleService.insertIntoSico(dateFrom.getValue(), dateTo.getValue());
@@ -298,7 +295,6 @@ public class Controller {
 			Alert alertSicoInt = new Alert(AlertType.INFORMATION);
 			alertSicoInt.setTitle("SUCCESS");
 			alertSicoInt.setHeaderText("Inserting data in sico_int table done successfully.");
-			// alert.setContentText(e.getMessage());
 			alertSicoInt.showAndWait();
 
 			financeModuleService.insertIntoSintercl(dateFrom.getValue(), dateTo.getValue());
@@ -306,7 +302,6 @@ public class Controller {
 			Alert alertSintercl = new Alert(AlertType.INFORMATION);
 			alertSintercl.setTitle("SUCCESS");
 			alertSintercl.setHeaderText("Inserting data in sintercl table done successfully.");
-			// alert.setContentText(e.getMessage());
 			alertSintercl.showAndWait();
 
 			financeModuleService.insertIntoSintercl2(dateFrom.getValue(), dateTo.getValue());
@@ -314,7 +309,6 @@ public class Controller {
 			Alert alertSintercl2 = new Alert(AlertType.INFORMATION);
 			alertSintercl2.setTitle("SUCCESS");
 			alertSintercl2.setHeaderText("(2) Inserting data in sintercl table done successfully.");
-			// alert.setContentText(e.getMessage());
 			alertSintercl2.showAndWait();
 
 			financeModuleService.insertIntoSintercl3(dateFrom.getValue(), dateTo.getValue());
@@ -322,7 +316,6 @@ public class Controller {
 			Alert alertSintercl3 = new Alert(AlertType.INFORMATION);
 			alertSintercl3.setTitle("SUCCESS");
 			alertSintercl3.setHeaderText("(3) Inserting data in sintercl table done successfully.");
-			// alert.setContentText(e.getMessage());
 			alertSintercl3.showAndWait();
 
 			financeModuleService.updateSicoInt();
@@ -330,7 +323,6 @@ public class Controller {
 			Alert alertupdateSicoInt = new Alert(AlertType.INFORMATION);
 			alertupdateSicoInt.setTitle("SUCCESS");
 			alertupdateSicoInt.setHeaderText("(3) Updating data in sico_int table done successfully.");
-			// alert.setContentText(e.getMessage());
 			alertupdateSicoInt.showAndWait();
 
 			financeModuleService.insertIntoSacTransactionImport(dateFrom.getValue(), dateTo.getValue());
@@ -339,13 +331,11 @@ public class Controller {
 			alertSacTransactionImport.setTitle("SUCCESS");
 			alertSacTransactionImport
 					.setHeaderText("Inserting data in sac_transaction_import table done successfully.");
-			// alert.setContentText(e.getMessage());
 			alertSacTransactionImport.showAndWait();
 
 			Alert alertEnd = new Alert(AlertType.INFORMATION);
 			alertEnd.setTitle("SUCCESS");
 			alertEnd.setHeaderText("All Operations done successfully.");
-			// alert.setContentText(e.getMessage());
 			alertEnd.showAndWait();
 
 		} catch (FinanceModuleException e) {
