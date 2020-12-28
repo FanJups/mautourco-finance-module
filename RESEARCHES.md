@@ -5,3 +5,9 @@ https://www.google.com/search?q=deploy+a+javafx+desktop+app+for+multiple+os&oq=d
 https://docs.oracle.com/javafx/2/deployment/self-contained-packaging.htm
 
 https://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm
+
+# dzone deploy javafx app
+
+https://www.google.com/search?q=dzone+deploy+javafx+app&oq=dzone+deploy+javafx+app&aqs=chrome..69i57j0l3j0i30l4.19756j0j7&sourceid=chrome&ie=UTF-8
+
+https://dzone.com/articles/the-next-generation-of-java-application-deployment
