@@ -270,70 +270,90 @@ public class Controller {
 					Optional.ofNullable(dateTo.getValue()), Optional.ofNullable(cmb1.getValue()));
 
 			Alert alertStart = new Alert(AlertType.INFORMATION);
+			alertStart.initOwner(closeBtn.getScene().getWindow());
 			alertStart.setTitle("Starting Operations");
-			alertStart.setHeaderText("Please, be patient while the process is going on.");
+			alertStart.setHeaderText("Please, be patient while the process is going on!");
 			alertStart.showAndWait();
 
 			financeModuleService.generateInvoiceNo();
 
-			Alert alertgenerateInvoiceNo = new Alert(AlertType.INFORMATION);
-			alertgenerateInvoiceNo.setTitle("SUCCESS");
-			alertgenerateInvoiceNo
-					.setHeaderText("Generating Invoice Number and Updating reservation_claim table done successfully.");
-			alertgenerateInvoiceNo.showAndWait();
+			Alert alertGenerateInvoiceNo = new Alert(AlertType.INFORMATION);
+			alertGenerateInvoiceNo.initOwner(closeBtn.getScene().getWindow());
+			alertGenerateInvoiceNo.setTitle("Generating Invoice Number and Updating reservation_claim table complete");
+
+			alertGenerateInvoiceNo.setHeaderText(financeModuleService.headerTextAlertgenerateInvoiceNo());
+
+			alertGenerateInvoiceNo.showAndWait();
 
 			financeModuleService.updateCloseFromZeroToOne(dateFrom.getValue(), dateTo.getValue(),
 					cmb1.getValue().getIdAgency(), "", "", "", "", "", "", "", "", "", "", false);
 
-			Alert alertupdateCloseFromZeroToOne = new Alert(AlertType.INFORMATION);
-			alertupdateCloseFromZeroToOne.setTitle("SUCCESS");
-			alertupdateCloseFromZeroToOne.setHeaderText("Updating reservation table done successfully.");
-			alertupdateCloseFromZeroToOne.showAndWait();
+			Alert alertUpdateCloseFromZeroToOne = new Alert(AlertType.INFORMATION);
+			alertUpdateCloseFromZeroToOne.initOwner(closeBtn.getScene().getWindow());
+			alertUpdateCloseFromZeroToOne.setTitle("Updating reservation table complete");
+			alertUpdateCloseFromZeroToOne.setHeaderText(
+					financeModuleService.headerTextAlertUpdateCloseFromZeroToOne(dateFrom.getValue(), dateTo.getValue(),
+							cmb1.getValue().getIdAgency(), "", "", "", "", "", "", "", "", "", "", false));
+			alertUpdateCloseFromZeroToOne.showAndWait();
 
 			financeModuleService.insertIntoSico(dateFrom.getValue(), dateTo.getValue());
 
 			Alert alertSicoInt = new Alert(AlertType.INFORMATION);
-			alertSicoInt.setTitle("SUCCESS");
-			alertSicoInt.setHeaderText("Inserting data in sico_int table done successfully.");
+			alertSicoInt.initOwner(closeBtn.getScene().getWindow());
+			alertSicoInt.setTitle("Inserting data in sico_int and Updating reservation_claim tables complete");
+			alertSicoInt
+					.setHeaderText(financeModuleService.headerTextAlertSicoInt(dateFrom.getValue(), dateTo.getValue()));
 			alertSicoInt.showAndWait();
 
 			financeModuleService.insertIntoSintercl(dateFrom.getValue(), dateTo.getValue());
 
 			Alert alertSintercl = new Alert(AlertType.INFORMATION);
-			alertSintercl.setTitle("SUCCESS");
-			alertSintercl.setHeaderText("Inserting data in sintercl table done successfully.");
+			alertSintercl.initOwner(closeBtn.getScene().getWindow());
+			alertSintercl.setTitle("Inserting data in sintercl table complete");
+			alertSintercl.setHeaderText(
+					financeModuleService.headerTextAlertSintercl(dateFrom.getValue(), dateTo.getValue()));
 			alertSintercl.showAndWait();
 
 			financeModuleService.insertIntoSintercl2(dateFrom.getValue(), dateTo.getValue());
 
 			Alert alertSintercl2 = new Alert(AlertType.INFORMATION);
-			alertSintercl2.setTitle("SUCCESS");
-			alertSintercl2.setHeaderText("(2) Inserting data in sintercl table done successfully.");
+			alertSintercl2.initOwner(closeBtn.getScene().getWindow());
+			alertSintercl2.setTitle("(2) Inserting data in sintercl table complete");
+			alertSintercl2.setHeaderText(
+					financeModuleService.headerTextAlertSintercl2(dateFrom.getValue(), dateTo.getValue()));
 			alertSintercl2.showAndWait();
 
 			financeModuleService.insertIntoSintercl3(dateFrom.getValue(), dateTo.getValue());
 
 			Alert alertSintercl3 = new Alert(AlertType.INFORMATION);
-			alertSintercl3.setTitle("SUCCESS");
-			alertSintercl3.setHeaderText("(3) Inserting data in sintercl table done successfully.");
+			alertSintercl3.initOwner(closeBtn.getScene().getWindow());
+			alertSintercl3.setTitle("(3) Inserting data in sintercl table complete");
+			alertSintercl3.setHeaderText(
+					financeModuleService.headerTextAlertSintercl3(dateFrom.getValue(), dateTo.getValue()));
 			alertSintercl3.showAndWait();
 
 			financeModuleService.updateSicoInt();
 
-			Alert alertupdateSicoInt = new Alert(AlertType.INFORMATION);
-			alertupdateSicoInt.setTitle("SUCCESS");
-			alertupdateSicoInt.setHeaderText("(3) Updating data in sico_int table done successfully.");
-			alertupdateSicoInt.showAndWait();
+			Alert alertUpdateSicoInt = new Alert(AlertType.INFORMATION);
+			alertUpdateSicoInt.initOwner(closeBtn.getScene().getWindow());
+			alertUpdateSicoInt.setTitle("Updating data in sico_int table complete");
+			alertUpdateSicoInt.setHeaderText(financeModuleService.headerTextAlertUpdateSicoInt());
+			alertUpdateSicoInt.showAndWait();
 
 			financeModuleService.insertIntoSacTransactionImport(dateFrom.getValue(), dateTo.getValue());
 
 			Alert alertSacTransactionImport = new Alert(AlertType.INFORMATION);
-			alertSacTransactionImport.setTitle("SUCCESS");
+			alertSacTransactionImport.initOwner(closeBtn.getScene().getWindow());
 			alertSacTransactionImport
-					.setHeaderText("Inserting data in sac_transaction_import table done successfully.");
+					.setTitle("Inserting data in sac_transaction_import and Updating sintercl tables complete");
+			alertSacTransactionImport.setHeaderText(
+					financeModuleService.headerTextAlertSacTransactionImport(dateFrom.getValue(), dateTo.getValue()));
 			alertSacTransactionImport.showAndWait();
 
+			financeModuleService.clean();
+
 			Alert alertEnd = new Alert(AlertType.INFORMATION);
+			alertEnd.initOwner(closeBtn.getScene().getWindow());
 			alertEnd.setTitle("SUCCESS");
 			alertEnd.setHeaderText("All Operations done successfully.");
 			alertEnd.showAndWait();

@@ -341,4 +341,69 @@ public class SacTransactionImport implements Serializable {
 		this.export = export;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SacTransactionImport [companyCode=");
+		builder.append(companyCode);
+		builder.append(", journal=");
+		builder.append(journal);
+		builder.append(", batchNo=");
+		builder.append(batchNo);
+		builder.append(", lineNo=");
+		builder.append(lineNo);
+		builder.append(", gl=");
+		builder.append(gl);
+		builder.append(", auxiliary=");
+		builder.append(auxiliary);
+		builder.append(", analytic=");
+		builder.append(analytic);
+		builder.append(", clientSupplier=");
+		builder.append(clientSupplier);
+		builder.append(", transactionDate=");
+		builder.append(transactionDate);
+		builder.append(", documentDate=");
+		builder.append(documentDate);
+		builder.append(", paymentDueDate=");
+		builder.append(paymentDueDate);
+		builder.append(", referenceNo=");
+		builder.append(referenceNo);
+		builder.append(", transactionDescription=");
+		builder.append(transactionDescription);
+		builder.append(", currencyGroup=");
+		builder.append(currencyGroup);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", exchangeRate=");
+		builder.append(exchangeRate);
+		builder.append(", localAmount=");
+		builder.append(localAmount);
+		builder.append(", foreignAmount=");
+		builder.append(foreignAmount);
+		builder.append(", transactionUD01=");
+		builder.append(transactionUD01);
+		builder.append(", transactionUD02=");
+		builder.append(transactionUD02);
+		builder.append(", transactionUD03=");
+		builder.append(transactionUD03);
+		builder.append(", transactionUD04=");
+		builder.append(transactionUD04);
+		builder.append(", transactionUD05=");
+		builder.append(transactionUD05);
+		builder.append(", taxableAmount=");
+		builder.append(taxableAmount);
+		builder.append(", taxableAmountForeign=");
+		builder.append(taxableAmountForeign);
+		builder.append(", taxAtSource=");
+		builder.append(taxAtSource);
+		builder.append(", taxAtSourcePer=");
+		builder.append(taxAtSourcePer);
+		builder.append(", taxAtSourceAmt=");
+		builder.append(taxAtSourceAmt);
+		builder.append(", export=");
+		builder.append(export);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

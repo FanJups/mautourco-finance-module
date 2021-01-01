@@ -48,6 +48,120 @@ public class TableViewDao {
 			+ "TaxableAmountForeign,TaxAtSource,TaxAtSourcePer,TaxAtSourceAmt) "
 			+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
+	private static int numberOfRowsInsertedIntoInvHeader = 0;
+
+	private static int numberOfReservationClaimRowsUpdatedAfterInsertingIntoInvHeader = 0;
+
+	private static int numberOfReservationRowsUpdated = 0;
+
+	private static int numberOfRowsInsertedIntoSicoInt = 0;
+
+	private static int numberOfReservationClaimRowsUpdatedAfterInsertingIntoSicoInt = 0;
+
+	private static int numberOfRowsInsertedIntoSintercl = 0;
+
+	private static int numberOfRowsInsertedIntoSintercl2 = 0;
+
+	private static int numberOfRowsInsertedIntoSintercl3 = 0;
+
+	private static int numberOfSicoIntRowsUpdated = 0;
+
+	private static int numberOfRowsInsertedIntoSacTransactionImport = 0;
+
+	private static int numberOfSinterclRowsUpdatedAfterInsertingIntoSacTransactionImport = 0;
+
+	public static int getNumberOfRowsInsertedIntoInvHeader() {
+		return numberOfRowsInsertedIntoInvHeader;
+	}
+
+	public static int getNumberOfReservationClaimRowsUpdatedAfterInsertingIntoInvHeader() {
+		return numberOfReservationClaimRowsUpdatedAfterInsertingIntoInvHeader;
+	}
+
+	public static int getNumberOfReservationRowsUpdated() {
+		return numberOfReservationRowsUpdated;
+	}
+
+	public static int getNumberOfRowsInsertedIntoSicoInt() {
+		return numberOfRowsInsertedIntoSicoInt;
+	}
+
+	public static int getNumberOfReservationClaimRowsUpdatedAfterInsertingIntoSicoInt() {
+		return numberOfReservationClaimRowsUpdatedAfterInsertingIntoSicoInt;
+	}
+
+	public static int getNumberOfRowsInsertedIntoSintercl() {
+		return numberOfRowsInsertedIntoSintercl;
+	}
+
+	public static int getNumberOfRowsInsertedIntoSintercl2() {
+		return numberOfRowsInsertedIntoSintercl2;
+	}
+
+	public static int getNumberOfRowsInsertedIntoSintercl3() {
+		return numberOfRowsInsertedIntoSintercl3;
+	}
+
+	public static int getNumberOfSicoIntRowsUpdated() {
+		return numberOfSicoIntRowsUpdated;
+	}
+
+	public static int getNumberOfRowsInsertedIntoSacTransactionImport() {
+		return numberOfRowsInsertedIntoSacTransactionImport;
+	}
+
+	public static int getNumberOfSinterclRowsUpdatedAfterInsertingIntoSacTransactionImport() {
+		return numberOfSinterclRowsUpdatedAfterInsertingIntoSacTransactionImport;
+	}
+
+	public static void setNumberOfRowsInsertedIntoInvHeader(int numberOfRowsInsertedIntoInvHeader) {
+		TableViewDao.numberOfRowsInsertedIntoInvHeader = numberOfRowsInsertedIntoInvHeader;
+	}
+
+	public static void setNumberOfReservationClaimRowsUpdatedAfterInsertingIntoInvHeader(
+			int numberOfReservationClaimRowsUpdatedAfterInsertingIntoInvHeader) {
+		TableViewDao.numberOfReservationClaimRowsUpdatedAfterInsertingIntoInvHeader = numberOfReservationClaimRowsUpdatedAfterInsertingIntoInvHeader;
+	}
+
+	public static void setNumberOfReservationRowsUpdated(int numberOfReservationRowsUpdated) {
+		TableViewDao.numberOfReservationRowsUpdated = numberOfReservationRowsUpdated;
+	}
+
+	public static void setNumberOfRowsInsertedIntoSicoInt(int numberOfRowsInsertedIntoSicoInt) {
+		TableViewDao.numberOfRowsInsertedIntoSicoInt = numberOfRowsInsertedIntoSicoInt;
+	}
+
+	public static void setNumberOfReservationClaimRowsUpdatedAfterInsertingIntoSicoInt(
+			int numberOfReservationClaimRowsUpdatedAfterInsertingIntoSicoInt) {
+		TableViewDao.numberOfReservationClaimRowsUpdatedAfterInsertingIntoSicoInt = numberOfReservationClaimRowsUpdatedAfterInsertingIntoSicoInt;
+	}
+
+	public static void setNumberOfRowsInsertedIntoSintercl(int numberOfRowsInsertedIntoSintercl) {
+		TableViewDao.numberOfRowsInsertedIntoSintercl = numberOfRowsInsertedIntoSintercl;
+	}
+
+	public static void setNumberOfRowsInsertedIntoSintercl2(int numberOfRowsInsertedIntoSintercl2) {
+		TableViewDao.numberOfRowsInsertedIntoSintercl2 = numberOfRowsInsertedIntoSintercl2;
+	}
+
+	public static void setNumberOfRowsInsertedIntoSintercl3(int numberOfRowsInsertedIntoSintercl3) {
+		TableViewDao.numberOfRowsInsertedIntoSintercl3 = numberOfRowsInsertedIntoSintercl3;
+	}
+
+	public static void setNumberOfSicoIntRowsUpdated(int numberOfSicoIntRowsUpdated) {
+		TableViewDao.numberOfSicoIntRowsUpdated = numberOfSicoIntRowsUpdated;
+	}
+
+	public static void setNumberOfRowsInsertedIntoSacTransactionImport(
+			int numberOfRowsInsertedIntoSacTransactionImport) {
+		TableViewDao.numberOfRowsInsertedIntoSacTransactionImport = numberOfRowsInsertedIntoSacTransactionImport;
+	}
+
+	public static void setNumberOfSinterclRowsUpdatedAfterInsertingIntoSacTransactionImport(
+			int numberOfSinterclRowsUpdatedAfterInsertingIntoSacTransactionImport) {
+		TableViewDao.numberOfSinterclRowsUpdatedAfterInsertingIntoSacTransactionImport = numberOfSinterclRowsUpdatedAfterInsertingIntoSacTransactionImport;
+	}
+
 	public List<ReservationClaim> getData(LocalDate dateFrom, LocalDate dateTo, int idAgency, String serviceFilter,
 			String typeFilter, String claimDescFilter, String fromFilter, String toFilter, String payingAgencyFilter,
 			String sicoraxCodeFilter, String auxiliaryFilter, String subsidiaryFilter, String currFilter,
@@ -154,7 +268,7 @@ public class TableViewDao {
 
 	}
 
-	public void updateCloseFromZeroToOne(Long resaId) {
+	public static void updateCloseFromZeroToOne(Long resaId) {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -168,14 +282,24 @@ public class TableViewDao {
 
 			statement = con.prepareStatement(query);
 
-			int status = statement.executeUpdate();
+			if (!statement.execute()) {
+
+				int updatedRows = statement.getUpdateCount();
+				if (updatedRows == 0) {
+
+					System.err.println("updateCloseFromZeroToOne NO UPDATE FOR " + resaId);
+
+				} else {
+
+					System.err.println("updateCloseFromZeroToOne UPDATE FOR " + resaId);
+
+				}
+
+				TableViewDao.numberOfReservationRowsUpdated += updatedRows;
+
+			}
 
 			con.commit();
-
-			if (status == 0)
-				System.err.println("updateCloseFromZeroToOne NO UPDATE FOR " + resaId);
-			else
-				System.err.println("updateCloseFromZeroToOne UPDATE FOR " + resaId);
 
 		} catch (SQLException ex) {
 
@@ -220,6 +344,8 @@ public class TableViewDao {
 			autoGeneratedValues = preparedStatement.getGeneratedKeys();
 
 			if (autoGeneratedValues.next()) {
+
+				TableViewDao.numberOfRowsInsertedIntoInvHeader++;
 
 				updateReservationClaimInvoiceNo(autoGeneratedValues.getLong(1));
 			} else {
@@ -602,11 +728,15 @@ public class TableViewDao {
 
 			if (status == 0) {
 
-				System.err.println("No row added to database");
+				System.err.println("No row added to sico_int table");
+
+			} else {
+
+				TableViewDao.numberOfRowsInsertedIntoSicoInt++;
+
+				updateReservationClaimInvoiceNoSicoInt(s.getInvoiceNo());
 
 			}
-
-			updateReservationClaimInvoiceNoSicoInt(s.getInvoiceNo());
 
 		} catch (SQLException e) {
 
@@ -645,11 +775,12 @@ public class TableViewDao {
 
 			con.commit();
 
-			if (status == 0) {
+			if (status == 0)
 
-				System.err.println("No row added to database");
+				System.err.println("No row added to sintercl");
 
-			}
+			else
+				TableViewDao.numberOfRowsInsertedIntoSintercl++;
 
 		} catch (SQLException e) {
 
@@ -686,11 +817,12 @@ public class TableViewDao {
 
 			con.commit();
 
-			if (status == 0) {
+			if (status == 0)
 
-				System.err.println("No row added to database");
+				System.err.println("No row added to sintercl");
 
-			}
+			else
+				TableViewDao.numberOfRowsInsertedIntoSintercl2++;
 
 		} catch (SQLException e) {
 
@@ -727,11 +859,12 @@ public class TableViewDao {
 
 			con.commit();
 
-			if (status == 0) {
+			if (status == 0)
 
-				System.err.println("No row added to database");
+				System.err.println("No row added to sintercl");
 
-			}
+			else
+				TableViewDao.numberOfRowsInsertedIntoSintercl3++;
 
 		} catch (SQLException e) {
 
@@ -773,13 +906,15 @@ public class TableViewDao {
 
 			if (status == 0) {
 
-				System.err.println("No row added to database");
+				System.err.println("No row added to sac_transaction_import");
 
 			}
 
 			autoGeneratedValues = preparedStatement.getGeneratedKeys();
 
 			if (autoGeneratedValues.next()) {
+
+				TableViewDao.numberOfRowsInsertedIntoSacTransactionImport++;
 
 				updateSintercl(s.getBatchNo().toString());
 			} else {
@@ -808,23 +943,23 @@ public class TableViewDao {
 
 		Connection con = null;
 
-		PreparedStatement statement = null;
+		PreparedStatement statementUpdate = null;
 
 		try {
 
-			String query = "UPDATE sico_int SET post = 1 , date_exp = CURRENT_DATE  WHERE post = 0 AND journal = \'ID\' AND source = \'MT\'";
+			String queryUpdate = "UPDATE sico_int SET post = 1 , date_exp = CURRENT_DATE  WHERE post = 0 AND journal = \'ID\' AND source = \'MT\'";
+
 			con = daoFactory.getConnection();
 
-			statement = con.prepareStatement(query);
+			statementUpdate = con.prepareStatement(queryUpdate);
 
-			int status = statement.executeUpdate();
+			if (!statementUpdate.execute()) {
+				TableViewDao.numberOfSicoIntRowsUpdated = statementUpdate.getUpdateCount();
+			}
 
 			con.commit();
 
-			if (status == 0)
-				System.err.println(" updateSicoInt NO UPDATE FOR ");
-			else
-				System.err.println(" updateSicoInt UPDATE FOR ");
+			System.err.println(" sico_int updated rows : " + TableViewDao.numberOfSicoIntRowsUpdated);
 
 		} catch (SQLException ex) {
 
@@ -837,7 +972,7 @@ public class TableViewDao {
 			ex.printStackTrace();
 
 		} finally {
-			close(statement, con);
+			close(statementUpdate, con);
 		}
 
 	}
@@ -855,14 +990,26 @@ public class TableViewDao {
 			con = daoFactory.getConnection();
 			statement = con.prepareStatement(query);
 
-			int status = statement.executeUpdate();
+			if (!statement.execute()) {
+
+				int updatedRows = statement.getUpdateCount();
+
+				if (updatedRows == 0) {
+
+					System.err.println(" updateSintercl NO UPDATE FOR " + batch);
+
+				} else {
+
+					System.err.println(" updateSintercl UPDATE FOR " + batch);
+
+				}
+				TableViewDao.numberOfSinterclRowsUpdatedAfterInsertingIntoSacTransactionImport += updatedRows;
+			}
 
 			con.commit();
 
-			if (status == 0)
-				System.err.println(" updateSintercl NO UPDATE FOR " + batch);
-			else
-				System.err.println(" updateSintercl UPDATE FOR " + batch);
+			System.err.println(" sintercl updated rows : "
+					+ TableViewDao.numberOfSinterclRowsUpdatedAfterInsertingIntoSacTransactionImport);
 
 		} catch (SQLException ex) {
 
@@ -899,14 +1046,25 @@ public class TableViewDao {
 
 			statement = con.prepareStatement(query);
 
-			int status = statement.executeUpdate();
+			if (!statement.execute()) {
+
+				int updatedRows = statement.getUpdateCount();
+
+				if (updatedRows == 0) {
+
+					System.err.println(" updateReservationClaimInvoiceNo NO UPDATE FOR " + invoiceNo);
+
+				} else {
+
+					System.err.println(" updateReservationClaimInvoiceNo UPDATE FOR " + invoiceNo);
+
+				}
+
+				TableViewDao.numberOfReservationClaimRowsUpdatedAfterInsertingIntoInvHeader += updatedRows;
+
+			}
 
 			con.commit();
-
-			if (status == 0)
-				System.err.println(" updateReservationClaimInvoiceNo NO UPDATE FOR " + invoiceNo);
-			else
-				System.err.println(" updateReservationClaimInvoiceNo UPDATE FOR " + invoiceNo);
 
 		} catch (SQLException ex) {
 
@@ -939,14 +1097,24 @@ public class TableViewDao {
 
 			statement = con.prepareStatement(query);
 
-			int status = statement.executeUpdate();
+			if (!statement.execute()) {
+
+				int updatedRows = statement.getUpdateCount();
+
+				if (updatedRows == 0) {
+
+					System.err.println(" updateReservationClaimInvoiceNoSicoInt NO UPDATE FOR " + invoiceNo);
+
+				} else {
+
+					System.err.println(" updateReservationClaimInvoiceNoSicoInt UPDATE FOR " + invoiceNo);
+
+				}
+				TableViewDao.numberOfReservationClaimRowsUpdatedAfterInsertingIntoSicoInt += updatedRows;
+
+			}
 
 			con.commit();
-
-			if (status == 0)
-				System.err.println(" updateReservationClaimInvoiceNoSicoInt NO UPDATE FOR " + invoiceNo);
-			else
-				System.err.println(" updateReservationClaimInvoiceNoSicoInt UPDATE FOR " + invoiceNo);
 
 		} catch (SQLException ex) {
 

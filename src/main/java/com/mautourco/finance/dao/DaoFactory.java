@@ -10,10 +10,9 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class DAOFactory {
 
-	// java.lang.module.FindException: Module metrics.healthchecks not found,
-	// required by com.zaxxer.hikari
-
 	private static HikariDataSource dataSource = null;
+
+	private static DAOFactory instance = null;
 
 	private static int numberOfConnections = 0;
 
@@ -62,7 +61,7 @@ public class DAOFactory {
 			e.printStackTrace();
 		}
 
-		DAOFactory instance = new DAOFactory(dataSource);
+		instance = new DAOFactory(dataSource);
 		return instance;
 
 	}
