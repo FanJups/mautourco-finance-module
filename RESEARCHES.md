@@ -11,3 +11,10 @@ https://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm
 https://www.google.com/search?q=dzone+deploy+javafx+app&oq=dzone+deploy+javafx+app&aqs=chrome..69i57j0l3j0i30l4.19756j0j7&sourceid=chrome&ie=UTF-8
 
 https://dzone.com/articles/the-next-generation-of-java-application-deployment
+
+# styling javafx table view css
+
+https://www.google.com/search?q=styling+javafx+table+view+css&oq=styling+javafx+table+view+css&aqs=chrome..69i57j0i10i22i30j0i8i13i30.103851j0j7&sourceid=chrome&ie=UTF-8
+
+https://edencoding.com/style-tableview-javafx/#:~:text=A%20JavaFX%20TableView%20can%20be,create%20a%20consistent%20application%20style.
+
