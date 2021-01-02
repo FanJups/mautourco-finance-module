@@ -18,3 +18,9 @@ https://www.google.com/search?q=styling+javafx+table+view+css&oq=styling+javafx+
 
 https://edencoding.com/style-tableview-javafx/#:~:text=A%20JavaFX%20TableView%20can%20be,create%20a%20consistent%20application%20style.
 
+# styling javafx alert css
+
+https://www.google.com/search?q=styling+javafx+alert+css&oq=styling+javafx+alert+css&aqs=chrome..69i57j0i22i30l2.10416j0j7&sourceid=chrome&ie=UTF-8
+
+https://stackoverflow.com/questions/37354686/customize-javafx-alert-with-css/37368747
+
