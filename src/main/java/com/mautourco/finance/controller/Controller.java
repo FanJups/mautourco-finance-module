@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.mautourco.finance.App;
 import com.mautourco.finance.event.AutoCompleteBox;
 import com.mautourco.finance.exception.FinanceModuleException;
 import com.mautourco.finance.model.ComboBoxItem;
@@ -155,6 +156,12 @@ public class Controller {
 	private Button closeBtn;
 
 	@FXML
+	private Button printBtn;
+
+	@FXML
+	private Button themeBtn;
+
+	@FXML
 	private void initialize() {
 		cmb1.setItems(FXCollections.observableArrayList(financeModuleService.getComboBoxItems()));
 
@@ -252,6 +259,7 @@ public class Controller {
 		} catch (FinanceModuleException e) {
 
 			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(searchBtn.getScene().getWindow());
 			alert.setTitle("ERROR");
 			alert.setHeaderText(e.getMessage());
 			// alert.setContentText(e.getMessage());
@@ -361,10 +369,63 @@ public class Controller {
 		} catch (FinanceModuleException e) {
 
 			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(closeBtn.getScene().getWindow());
 			alert.setTitle("ERROR");
 			alert.setHeaderText(e.getMessage());
 			// alert.setContentText(e.getMessage());
 			alert.showAndWait();
+
+		}
+
+	}
+
+	@FXML
+
+	private void print() {
+
+	}
+
+	@FXML
+
+	private void switchTheme() {
+
+		App.setLight(!App.isLight());
+
+		if (App.isLight()) {
+
+			System.err.println("THEME l :");
+
+			if (themeBtn.getScene().getStylesheets().contains(App.class.getResource(App.DARK_THEME).toExternalForm())) {
+
+				System.err.println("THEME l1 :");
+				themeBtn.getScene().getStylesheets().remove(App.class.getResource(App.DARK_THEME).toExternalForm());
+			}
+
+			if (!themeBtn.getScene().getStylesheets()
+					.contains(App.class.getResource(App.LIGHT_THEME).toExternalForm())) {
+				System.err.println("THEME l2 :");
+				themeBtn.getScene().getStylesheets().add(App.class.getResource(App.LIGHT_THEME).toExternalForm());
+			}
+
+			themeBtn.setText("GO TO DARK THEME");
+
+		} else {
+
+			System.err.println("THEME d :");
+
+			if (themeBtn.getScene().getStylesheets()
+					.contains(App.class.getResource(App.LIGHT_THEME).toExternalForm())) {
+				System.err.println("THEME : d1");
+				themeBtn.getScene().getStylesheets().remove(App.class.getResource(App.LIGHT_THEME).toExternalForm());
+			}
+
+			if (!themeBtn.getScene().getStylesheets()
+					.contains(App.class.getResource(App.DARK_THEME).toExternalForm())) {
+				System.err.println("THEME : d2");
+				themeBtn.getScene().getStylesheets().add(App.class.getResource(App.DARK_THEME).toExternalForm());
+			}
+
+			themeBtn.setText("GO TO LIGHT THEME");
 
 		}
 

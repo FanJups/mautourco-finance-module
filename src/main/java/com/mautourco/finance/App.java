@@ -15,18 +15,31 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-	private static Scene scene;
+	private static boolean light = true;
+
+	public static final String DARK_THEME = "styles/dark.css";
+	public static final String LIGHT_THEME = "styles/light.css";
+
+	public static boolean isLight() {
+		return light;
+	}
+
+	public static void setLight(boolean light) {
+		App.light = light;
+	}
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 
 		Locale.setDefault(Locale.ENGLISH);
 
-		primaryStage.setScene(new Scene(loadFXML("FinanceModule"), 1370, 700));
+		Parent parent = loadFXML("FinanceModule");
+
+		primaryStage.setScene(new Scene(parent, 1370, 700));
 		primaryStage.setTitle("Finance Module");
 		primaryStage.getIcons().add(new Image(App.class.getResourceAsStream("icons/mautourco2.jpg")));
+		primaryStage.getScene().getStylesheets().add(App.class.getResource(LIGHT_THEME).toExternalForm());
 
-		primaryStage.getScene().getStylesheets().add(App.class.getResource("styles/styles.css").toExternalForm());
 		primaryStage.show();
 	}
 

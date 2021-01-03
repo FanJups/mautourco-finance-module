@@ -8,21 +8,23 @@
    <top>
       <HBox prefHeight="49.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-             <Label text="Date From: ">
+         
+         	
+             <Label fx:id="dateFromLabel" text="Date From: ">
                <padding>
                   <Insets left="100.0" right="30.0" />
                </padding></Label>
-             <DatePicker fx:id="dateFrom" maxWidth="198.0" minWidth="198.0" prefHeight="25.0" prefWidth="198.0" promptText="Pls Select" />
-             <Label text="Date To: ">
+             <DatePicker fx:id="dateFrom" maxWidth="150" minWidth="150" prefHeight="25.0" prefWidth="150" promptText="Pls Select" />
+             <Label fx:id="dateToLabel" text="Date To: ">
                  <padding>
                      <Insets left="30.0" right="30.0" />
                  </padding></Label>
-            <DatePicker fx:id="dateTo" maxWidth="198.0" minWidth="198.0" prefWidth="198.0" promptText="Pls Select" />
-             <Label text="Agency: ">
+            <DatePicker fx:id="dateTo" maxWidth="150" minWidth="150" prefWidth="150" promptText="Pls Select" />
+             <Label fx:id="cmb1Label" text="Agency: ">
                  <padding>
                      <Insets left="30.0" right="30.0" />
                  </padding></Label>
-            <ComboBox fx:id="cmb1" maxWidth="400.0" minWidth="400.0" prefHeight="25.0" prefWidth="400.0"  promptText="Pls Select" />
+            <ComboBox fx:id="cmb1" maxWidth="300" minWidth="300" prefHeight="25.0" prefWidth="300"  promptText="Pls Select" />
             
             <Label text=""> 
 	            <padding>
@@ -79,14 +81,14 @@
    
 	   <VBox>
 	   
-	   		<Label text="FILTERS">
+	   		<Label fx:id="filtersLabel" text="FILTERS">
 	               <padding>
 	                  <Insets left="10.0" bottom="10.0" />
 	               </padding>
 	        </Label>
 	   		
 	   
-		   <Label text="Service">
+		   <Label fx:id="inputTextServiceLabel" text="Service">
 	               <padding>
 	                  <Insets left="10.0" bottom="10.0" />
 	               </padding>
@@ -94,7 +96,7 @@
 	   		<TextField fx:id="inputTextService" prefWidth="100.0" />
 	   		
 	   		
-	   		<Label text="Type">
+	   		<Label fx:id="inputTextTypeLabel" text="Type">
 	               <padding>
 	                  <Insets left="10.0" bottom="10.0" />
 	               </padding>
@@ -102,7 +104,7 @@
 	   		<TextField fx:id="inputTextType" prefWidth="100.0" />
 	   		
 	   		
-	   		<Label text="Claim Desc">
+	   		<Label fx:id="inputTextClaimDescLabel" text="Claim Desc">
 	               <padding>
 	                  <Insets left="10.0" bottom="10.0" />
 	               </padding>
@@ -110,7 +112,7 @@
 	   		<TextField fx:id="inputTextClaimDesc" prefWidth="100.0" />
 	   		
 	   		
-	   		<Label text="From">
+	   		<Label fx:id="inputTextFromLabel" text="From">
 	               <padding>
 	                  <Insets left="10.0" bottom="10.0" />
 	               </padding>
@@ -119,7 +121,7 @@
 	   		
 	   		
 	   		
-	   		<Label text="To">
+	   		<Label fx:id="inputTextToLabel" text="To">
 	               <padding>
 	                  <Insets left="10.0" bottom="10.0" />
 	               </padding>
@@ -128,7 +130,7 @@
 	   		
 	   		
 	   		
-	   		<Label text="Paying Agency">
+	   		<Label fx:id="inputTextPayingAgencyLabel" text="Paying Agency">
 	               <padding>
 	                  <Insets left="10.0" bottom="10.0" />
 	               </padding>
@@ -137,7 +139,7 @@
 	   		
 	   		
 	   		
-	   		<Label text="Sicorax Code">
+	   		<Label fx:id="inputTextSicoraxCodeLabel" text="Sicorax Code">
 	               <padding>
 	                  <Insets left="10.0" bottom="10.0" />
 	               </padding>
@@ -145,26 +147,36 @@
 	   		<TextField fx:id="inputTextSicoraxCode" prefWidth="100.0" />
 	   		
 	   		
-	   		<Label text="Auxiliary">
+	   		<Label fx:id="inputTextAuxiliaryLabel"  text="Auxiliary">
 	               <padding>
 	                  <Insets left="10.0" bottom="10.0" />
 	               </padding>
 	        </Label>
 	   		<TextField fx:id="inputTextAuxiliary" prefWidth="100.0" />
 	   		
-	   		<Label text="Subsidiary">
+	   		<Label fx:id="inputTextSubsidiaryLabel" text="Subsidiary">
 	               <padding>
 	                  <Insets left="10.0" bottom="10.0" />
 	               </padding>
 	        </Label>
 	   		<TextField fx:id="inputTextSubsidiary" prefWidth="100.0" />
 
-		   <Label text="Currency">
+		   <Label fx:id="inputTextCurrLabel" text="Currency">
 			   <padding>
 				   <Insets left="10.0" bottom="10.0" />
 			   </padding>
 		   </Label>
 		   <TextField fx:id="inputTextCurr" prefWidth="100.0" />
+		   
+		   <Label text="">
+			   <padding>
+				   <Insets left="10.0" bottom="40.0" />
+			   </padding>
+		   </Label>
+		   
+		   
+		   
+		   
 	   
 	   </VBox>
    
@@ -173,8 +185,25 @@
       <HBox alignment="CENTER" prefHeight="49.0" prefWidth="603.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="closeBtn" alignment="BOTTOM_CENTER" mnemonicParsing="false" text="CLOSE" onAction="#handleCloseButtonAction" />
-            <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" text="PRINT" />
+            <Label text="">
+               <padding>
+                  <Insets left="30.0" right="30.0" />
+               </padding></Label>
+            <Button fx:id="printBtn" onAction="#print" alignment="BOTTOM_CENTER" mnemonicParsing="false" text="PRINT" />
+            <Label text="">
+               <padding>
+                  <Insets left="30.0" right="30.0" />
+               </padding></Label>
             <Button alignment="CENTER" mnemonicParsing="false" onAction="#validateForm" text="REFRESH" />
+            
+                     <Label text="">
+               <padding>
+                  <Insets left="30.0" right="30.0" />
+               </padding></Label>
+   
+            
+            <Button fx:id="themeBtn" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing=  "false" onAction="#switchTheme" text="GO TO DARK THEME" textAlignment="CENTER" />
+            
          </children>
       </HBox>
    </bottom>
