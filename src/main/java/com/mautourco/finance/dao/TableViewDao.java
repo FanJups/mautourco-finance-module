@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mautourco.finance.exception.DAOException;
 import com.mautourco.finance.model.InvHeader;
 import com.mautourco.finance.model.ReservationClaim;
 import com.mautourco.finance.model.ReservationClaimPerResaIdPerClaimCurrency;
@@ -178,64 +179,132 @@ public class TableViewDao {
 
 			con = daoFactory.getConnection();
 
-			String noNullValues = " AND claim_total_after_disc IS NOT NULL " + "AND taxable_claim IS NOT NULL "
-					+ "AND resa_id IS NOT NULL " + "AND service_type IS NOT NULL " + "AND type IS NOT NULL "
-					+ "AND description IS NOT NULL " + "AND date_effected IS NOT NULL "
-					+ "AND service_from IS NOT NULL " + "AND service_to IS NOT NULL " + "AND nights IS NOT NULL "
-					+ "AND claim_type IS NOT NULL " + "AND claim_adult_pax IS NOT NULL "
-					+ "AND claim_teen_pax IS NOT NULL " + "AND claim_child_pax IS NOT NULL "
-					+ "AND claim_adult_rate IS NOT NULL " + "AND claim_teen_rate IS NOT NULL "
-					+ "AND claim_child_rate IS NOT NULL " + "AND claim_currency IS NOT NULL "
-					+ "AND exchange_rate IS NOT NULL " + "AND inv_jde_code IS NOT NULL "
-					+ "AND inv_subsidiary IS NOT NULL " + "AND inv_c_center IS NOT NULL";
+			String noNullValues = " AND reservation_claim.claim_total_after_disc IS NOT NULL "
+					+ "AND reservation_claim.taxable_claim IS NOT NULL " + "AND reservation_claim.resa_id IS NOT NULL "
+					+ "AND reservation_claim.service_type IS NOT NULL " + "AND reservation_claim.type IS NOT NULL "
+					+ "AND reservation_claim.description IS NOT NULL "
+					+ "AND reservation_claim.date_effected IS NOT NULL "
+					+ "AND reservation_claim.service_from IS NOT NULL "
+					+ "AND reservation_claim.service_to IS NOT NULL " + "AND reservation_claim.nights IS NOT NULL "
+					+ "AND reservation_claim.claim_type IS NOT NULL "
+					+ "AND reservation_claim.claim_adult_pax IS NOT NULL "
+					+ "AND reservation_claim.claim_teen_pax IS NOT NULL "
+					+ "AND reservation_claim.claim_child_pax IS NOT NULL "
+					+ "AND reservation_claim.claim_adult_rate IS NOT NULL "
+					+ "AND reservation_claim.claim_teen_rate IS NOT NULL "
+					+ "AND reservation_claim.claim_child_rate IS NOT NULL "
+					+ "AND reservation_claim.claim_currency IS NOT NULL "
+					+ "AND reservation_claim.exchange_rate IS NOT NULL "
+					+ "AND reservation_claim.inv_jde_code IS NOT NULL "
+					+ "AND reservation_claim.inv_subsidiary IS NOT NULL "
+					+ "AND reservation_claim.inv_c_center IS NOT NULL";
 
-			String filter = " AND (service_type LIKE \'%" + serviceFilter + "%\' OR service_type IS NULL)"
-					+ " AND (type LIKE \'%" + typeFilter + "%\' OR type IS NULL)" + " AND (description LIKE \'%"
-					+ claimDescFilter + "%\' OR description IS NULL)" + " AND (service_from LIKE \'%" + fromFilter
-					+ "%\' OR service_from IS NULL)" + " AND (service_to LIKE \'%" + toFilter
-					+ "%\' OR service_to IS NULL)" + " AND (paying_agency LIKE \'%" + payingAgencyFilter
-					+ "%\' OR paying_agency IS NULL)" + " AND (inv_jde_code LIKE \'%" + sicoraxCodeFilter
-					+ "%\' OR inv_jde_code IS NULL)" + " AND (inv_c_center LIKE \'%" + auxiliaryFilter
-					+ "%\' OR inv_c_center IS NULL)" + " AND (inv_subsidiary LIKE \'%" + subsidiaryFilter
-					+ "%\' OR inv_subsidiary IS NULL)" + " AND (claim_currency LIKE \'%" + currFilter
-					+ "%\' OR claim_currency IS NULL)";
+			StringBuilder builderFilter = new StringBuilder();
+
+			String serviceFilterSql = serviceFilter.equals("")
+					? " AND (reservation_claim.service_type LIKE \'%" + serviceFilter
+							+ "%\' OR reservation_claim.service_type IS NULL)"
+					: " AND (reservation_claim.service_type LIKE \'%" + serviceFilter + "%\')";
+
+			String typeFilterSql = typeFilter.equals("")
+					? " AND (reservation_claim.type LIKE \'%" + typeFilter + "%\' OR reservation_claim.type IS NULL)"
+					: " AND (reservation_claim.type LIKE \'%" + typeFilter + "%\')";
+
+			String claimDescFilterSql = claimDescFilter.equals("")
+					? " AND (reservation_claim.description LIKE \'%" + claimDescFilter
+							+ "%\' OR reservation_claim.description IS NULL)"
+					: " AND (reservation_claim.description LIKE \'%" + claimDescFilter + "%\')";
+
+			String fromFilterSql = fromFilter.equals("")
+					? " AND (reservation_claim.service_from LIKE \'%" + fromFilter
+							+ "%\' OR reservation_claim.service_from IS NULL)"
+					: " AND (reservation_claim.service_from LIKE \'%" + fromFilter + "%\')";
+
+			String toFilterSql = toFilter.equals("")
+					? " AND (reservation_claim.service_to LIKE \'%" + toFilter
+							+ "%\' OR reservation_claim.service_to IS NULL)"
+					: " AND (reservation_claim.service_to LIKE \'%" + toFilter + "%\')";
+
+			String payingAgencyFilterSql = payingAgencyFilter.equals("")
+					? " AND (agency.name LIKE \'%" + payingAgencyFilter + "%\' OR agency.name IS NULL)"
+					: " AND (agency.name LIKE \'%" + payingAgencyFilter + "%\')";
+
+			String sicoraxCodeFilterSql = sicoraxCodeFilter.equals("")
+					? " AND (reservation_claim.inv_jde_code LIKE \'%" + sicoraxCodeFilter
+							+ "%\' OR reservation_claim.inv_jde_code IS NULL)"
+					: " AND (reservation_claim.inv_jde_code LIKE \'%" + sicoraxCodeFilter + "%\')";
+
+			String auxiliaryFilterSql = auxiliaryFilter.equals("")
+					? " AND (reservation_claim.inv_c_center LIKE \'%" + auxiliaryFilter
+							+ "%\' OR reservation_claim.inv_c_center IS NULL)"
+					: " AND (reservation_claim.inv_c_center LIKE \'%" + auxiliaryFilter + "%\')";
+
+			String subsidiaryFilterSql = subsidiaryFilter.equals("")
+					? " AND (reservation_claim.inv_subsidiary LIKE \'%" + subsidiaryFilter
+							+ "%\' OR reservation_claim.inv_subsidiary IS NULL)"
+					: " AND (reservation_claim.inv_subsidiary LIKE \'%" + subsidiaryFilter + "%\')";
+
+			String currFilterSql = currFilter.equals("")
+					? " AND (reservation_claim.claim_currency LIKE \'%" + currFilter
+							+ "%\' OR reservation_claim.claim_currency IS NULL)"
+					: " AND (reservation_claim.claim_currency LIKE \'%" + currFilter + "%\')";
+
+			builderFilter.append(serviceFilterSql).append(typeFilterSql).append(claimDescFilterSql)
+					.append(fromFilterSql).append(toFilterSql).append(payingAgencyFilterSql)
+					.append(sicoraxCodeFilterSql).append(auxiliaryFilterSql).append(subsidiaryFilterSql)
+					.append(currFilterSql);
+
+			String filter = builderFilter.toString();
+
 			String query = "";
 
 			String queryAll = "";
 
 			if (containsNullValues) {
 
-				query = "SELECT resa_id, service_type, TYPE, description, date_effected, service_from, service_to, nights, claim_type,"
-						+ " claim_adult_pax, claim_teen_pax, claim_child_pax, claim_adult_rate, claim_teen_rate, claim_child_rate, claim_currency,"
-						+ " exchange_rate, taxable_claim, (claim_total_after_disc - taxable_claim) AS vat, claim_total_after_disc, agency.`name`,"
-						+ " inv_jde_code, inv_subsidiary, inv_c_center"
-						+ " FROM reservation_claim, agency WHERE date_effected BETWEEN " + "\'" + dateFrom + "\'"
-						+ " AND " + "\'" + dateTo + "\'"
+				query = "SELECT reservation_claim.resa_id, reservation_claim.service_type, reservation_claim.type, reservation_claim.description, "
+						+ "reservation_claim.date_effected, reservation_claim.service_from, reservation_claim.service_to, reservation_claim.nights, reservation_claim.claim_type,"
+						+ " reservation_claim.claim_adult_pax, reservation_claim.claim_teen_pax, reservation_claim.claim_child_pax,"
+						+ " reservation_claim.claim_adult_rate, reservation_claim.claim_teen_rate, reservation_claim.claim_child_rate, reservation_claim.claim_currency,"
+						+ " reservation_claim.exchange_rate, reservation_claim.taxable_claim, (reservation_claim.claim_total_after_disc - reservation_claim.taxable_claim) AS vat,"
+						+ " reservation_claim.claim_total_after_disc, agency.name,"
+						+ " reservation_claim.inv_jde_code, reservation_claim.inv_subsidiary, reservation_claim.inv_c_center"
+						+ " FROM reservation_claim, agency WHERE reservation_claim.date_effected BETWEEN " + "\'"
+						+ dateFrom + "\'" + " AND " + "\'" + dateTo + "\'"
 						+ " AND reservation_claim.active = 1 AND agency.active = 1 AND reservation_claim.paying_agency_id = agency.id_agency AND booking_agency_id = "
 						+ idAgency + filter;
 
-				queryAll = "SELECT resa_id, service_type, TYPE, description, date_effected, service_from, service_to, nights, claim_type,"
-						+ " claim_adult_pax, claim_teen_pax, claim_child_pax, claim_adult_rate, claim_teen_rate, claim_child_rate, claim_currency,"
-						+ " exchange_rate, taxable_claim, (claim_total_after_disc - taxable_claim) AS vat, claim_total_after_disc, agency.`name`,"
-						+ " inv_jde_code, inv_subsidiary, inv_c_center"
+				queryAll = "SELECT reservation_claim.resa_id, reservation_claim.service_type, reservation_claim.type, reservation_claim.description, "
+						+ "reservation_claim.date_effected, reservation_claim.service_from, reservation_claim.service_to, reservation_claim.nights, reservation_claim.claim_type,"
+						+ " reservation_claim.claim_adult_pax, reservation_claim.claim_teen_pax, reservation_claim.claim_child_pax,"
+						+ " reservation_claim.claim_adult_rate, reservation_claim.claim_teen_rate, reservation_claim.claim_child_rate, reservation_claim.claim_currency,"
+						+ " reservation_claim.exchange_rate, reservation_claim.taxable_claim, (reservation_claim.claim_total_after_disc - reservation_claim.taxable_claim) AS vat,"
+						+ " reservation_claim.claim_total_after_disc, agency.name,"
+						+ " reservation_claim.inv_jde_code, reservation_claim.inv_subsidiary, reservation_claim.inv_c_center"
 						+ " FROM reservation_claim, agency WHERE reservation_claim.active = 1 AND agency.active = 1 AND reservation_claim.paying_agency_id = agency.id_agency"
 						+ filter;
 
 			} else {
 
-				query = "SELECT resa_id, service_type, TYPE, description, date_effected, service_from, service_to, nights, claim_type,"
-						+ " claim_adult_pax, claim_teen_pax, claim_child_pax, claim_adult_rate, claim_teen_rate, claim_child_rate, claim_currency,"
-						+ " exchange_rate, taxable_claim, (claim_total_after_disc - taxable_claim) AS vat, claim_total_after_disc, agency.`name`,"
-						+ " inv_jde_code, inv_subsidiary, inv_c_center"
-						+ " FROM reservation_claim, agency WHERE date_effected BETWEEN " + "\'" + dateFrom + "\'"
-						+ " AND " + "\'" + dateTo + "\'"
+				query = "SELECT reservation_claim.resa_id, reservation_claim.service_type, reservation_claim.type, reservation_claim.description, "
+						+ "reservation_claim.date_effected, reservation_claim.service_from, reservation_claim.service_to, reservation_claim.nights, reservation_claim.claim_type,"
+						+ " reservation_claim.claim_adult_pax, reservation_claim.claim_teen_pax, reservation_claim.claim_child_pax,"
+						+ " reservation_claim.claim_adult_rate, reservation_claim.claim_teen_rate, reservation_claim.claim_child_rate, reservation_claim.claim_currency,"
+						+ " reservation_claim.exchange_rate, reservation_claim.taxable_claim, (reservation_claim.claim_total_after_disc - reservation_claim.taxable_claim) AS vat,"
+						+ " reservation_claim.claim_total_after_disc, agency.name,"
+						+ " reservation_claim.inv_jde_code, reservation_claim.inv_subsidiary, reservation_claim.inv_c_center"
+						+ " FROM reservation_claim, agency WHERE reservation_claim.date_effected BETWEEN " + "\'"
+						+ dateFrom + "\'" + " AND " + "\'" + dateTo + "\'"
 						+ " AND reservation_claim.active = 1 AND agency.active = 1 AND reservation_claim.paying_agency_id = agency.id_agency AND booking_agency_id = "
 						+ idAgency + noNullValues + filter;
 
-				queryAll = "SELECT resa_id, service_type, TYPE, description, date_effected, service_from, service_to, nights, claim_type,"
-						+ " claim_adult_pax, claim_teen_pax, claim_child_pax, claim_adult_rate, claim_teen_rate, claim_child_rate, claim_currency,"
-						+ " exchange_rate, taxable_claim, (claim_total_after_disc - taxable_claim) AS vat, claim_total_after_disc, agency.`name`, "
-						+ " inv_jde_code, inv_subsidiary, inv_c_center"
+				queryAll = "SELECT reservation_claim.resa_id, reservation_claim.service_type, reservation_claim.type, reservation_claim.description, "
+						+ "reservation_claim.date_effected, reservation_claim.service_from, reservation_claim.service_to, reservation_claim.nights, reservation_claim.claim_type,"
+						+ " reservation_claim.claim_adult_pax, reservation_claim.claim_teen_pax, reservation_claim.claim_child_pax,"
+						+ " reservation_claim.claim_adult_rate, reservation_claim.claim_teen_rate, reservation_claim.claim_child_rate, reservation_claim.claim_currency,"
+						+ " reservation_claim.exchange_rate, reservation_claim.taxable_claim, (reservation_claim.claim_total_after_disc - reservation_claim.taxable_claim) AS vat,"
+						+ " reservation_claim.claim_total_after_disc, agency.name,"
+						+ " reservation_claim.inv_jde_code, reservation_claim.inv_subsidiary, reservation_claim.inv_c_center"
 						+ " FROM reservation_claim, agency WHERE  reservation_claim.active = 1 AND agency.active = 1 AND reservation_claim.paying_agency_id = agency.id_agency"
 						+ noNullValues + filter;
 
@@ -254,9 +323,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
-			ex.printStackTrace();
+
+			throw new DAOException(ex);
 
 		} finally {
 
@@ -306,10 +376,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 
@@ -337,7 +407,7 @@ public class TableViewDao {
 
 			if (status == 0) {
 
-				System.err.println("No row added to database");
+				throw new DAOException("No row added to inv_header table");
 
 			}
 
@@ -349,7 +419,8 @@ public class TableViewDao {
 
 				updateReservationClaimInvoiceNo(autoGeneratedValues.getLong(1));
 			} else {
-				System.err.println("Invoice creation failed, no auto-generated value");
+
+				throw new DAOException("Invoice creation failed, no auto-generated value");
 
 			}
 
@@ -358,10 +429,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			e.printStackTrace();
+			throw new DAOException(e);
 
 		} finally {
 
@@ -412,10 +483,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 
@@ -465,10 +536,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 
@@ -517,10 +588,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 
@@ -568,10 +639,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 
@@ -644,10 +715,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 
@@ -692,10 +763,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 
@@ -728,7 +799,7 @@ public class TableViewDao {
 
 			if (status == 0) {
 
-				System.err.println("No row added to sico_int table");
+				throw new DAOException("No row added to sico_int table");
 
 			} else {
 
@@ -743,10 +814,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			e.printStackTrace();
+			throw new DAOException(e);
 
 		} finally {
 
@@ -777,7 +848,7 @@ public class TableViewDao {
 
 			if (status == 0)
 
-				System.err.println("No row added to sintercl");
+				throw new DAOException("No row added to sintercl");
 
 			else
 				TableViewDao.numberOfRowsInsertedIntoSintercl++;
@@ -787,10 +858,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			e.printStackTrace();
+			throw new DAOException(e);
 
 		} finally {
 			close(preparedStatement, con);
@@ -819,7 +890,7 @@ public class TableViewDao {
 
 			if (status == 0)
 
-				System.err.println("No row added to sintercl");
+				throw new DAOException("No row added to sintercl");
 
 			else
 				TableViewDao.numberOfRowsInsertedIntoSintercl2++;
@@ -829,10 +900,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			e.printStackTrace();
+			throw new DAOException(e);
 
 		} finally {
 			close(preparedStatement, con);
@@ -861,7 +932,7 @@ public class TableViewDao {
 
 			if (status == 0)
 
-				System.err.println("No row added to sintercl");
+				throw new DAOException("No row added to sintercl");
 
 			else
 				TableViewDao.numberOfRowsInsertedIntoSintercl3++;
@@ -871,10 +942,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			e.printStackTrace();
+			throw new DAOException(e);
 
 		} finally {
 			close(preparedStatement, con);
@@ -906,7 +977,7 @@ public class TableViewDao {
 
 			if (status == 0) {
 
-				System.err.println("No row added to sac_transaction_import");
+				throw new DAOException("No row added to sac_transaction_import");
 
 			}
 
@@ -918,7 +989,8 @@ public class TableViewDao {
 
 				updateSintercl(s.getBatchNo().toString());
 			} else {
-				System.err.println("Inserting into sac_transaction_import failed, no auto-generated value");
+
+				throw new DAOException("Inserting into sac_transaction_import failed, no auto-generated value");
 
 			}
 
@@ -927,10 +999,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			e.printStackTrace();
+			throw new DAOException(e);
 
 		} finally {
 			close(autoGeneratedValues, preparedStatement, con);
@@ -966,10 +1038,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 			close(statementUpdate, con);
@@ -1016,10 +1088,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 			close(statement, con);
@@ -1037,7 +1109,7 @@ public class TableViewDao {
 
 			con = daoFactory.getConnection();
 
-			System.err.println(getInvHeader(invoiceNo));
+			// System.err.println(getInvHeader(invoiceNo));
 
 			String query = "UPDATE reservation_claim SET invoice_no = " + invoiceNo + ", date_invoiced = \'"
 					+ getInvHeader(invoiceNo).getInvDate() + "\'" + " WHERE resa_id = "
@@ -1071,10 +1143,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 			close(statement, con);
@@ -1121,10 +1193,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 			close(statement, con);
@@ -1165,10 +1237,10 @@ public class TableViewDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 			close(set, statement, con);

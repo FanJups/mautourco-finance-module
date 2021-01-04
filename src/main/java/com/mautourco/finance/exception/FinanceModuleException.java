@@ -8,4 +8,12 @@ public class FinanceModuleException extends RuntimeException {
 		super(message);
 	}
 
+	public FinanceModuleException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public FinanceModuleException(Throwable cause) {
+		super(cause);
+	}
+
 }

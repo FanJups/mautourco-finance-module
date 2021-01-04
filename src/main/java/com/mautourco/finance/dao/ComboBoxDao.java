@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mautourco.finance.exception.DAOException;
 import com.mautourco.finance.model.ComboBoxItem;
 
 public class ComboBoxDao {
@@ -39,10 +40,10 @@ public class ComboBoxDao {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new DAOException(e1);
 			}
 
-			ex.printStackTrace();
+			throw new DAOException(ex);
 
 		} finally {
 

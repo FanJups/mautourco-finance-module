@@ -1,5 +1,7 @@
  .root {
--fx-background-color: #00112b;
+ 	/* #00112b*/
+-fx-background-color: #002255;
+/*-fx-background-color: #00112b;*/
 -fx-text-fill: white;
 }
  
@@ -40,6 +42,13 @@
 .table-view .column-header {
     -fx-background-color: transparent;
     -fx-text-background-color: white;
+}
+
+/* Header Sort Arrows */
+.table-view /*> column-header-background > nested-column-header >*/ .arrow,
+.tree-table-view /*> column-header-background > nested-column-header >*/ .arrow {
+    -fx-background-color: white;
+   
 }
 
 .table-row-cell:odd {

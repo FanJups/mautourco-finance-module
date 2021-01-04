@@ -7,9 +7,11 @@ import java.util.Optional;
 import com.mautourco.finance.App;
 import com.mautourco.finance.event.AutoCompleteBox;
 import com.mautourco.finance.exception.FinanceModuleException;
+import com.mautourco.finance.exception.ValidationException;
 import com.mautourco.finance.model.ComboBoxItem;
 import com.mautourco.finance.model.ReservationClaim;
 import com.mautourco.finance.service.FinanceModuleService;
+import com.mautourco.finance.validation.Validation;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -28,6 +30,8 @@ import javafx.scene.layout.BorderPane;
 public class Controller {
 
 	private FinanceModuleService financeModuleService = new FinanceModuleService();
+
+	private Validation validation = new Validation();
 
 	@FXML
 	private DatePicker dateFrom;
@@ -163,7 +167,21 @@ public class Controller {
 
 	@FXML
 	private void initialize() {
-		cmb1.setItems(FXCollections.observableArrayList(financeModuleService.getComboBoxItems()));
+
+		try {
+
+			cmb1.setItems(FXCollections.observableArrayList(financeModuleService.getComboBoxItems()));
+
+		} catch (FinanceModuleException e) {
+
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(searchBtn.getScene().getWindow());
+			alert.setTitle("ERROR");
+			alert.setHeaderText(e.getMessage());
+			// alert.setContentText(e.getMessage());
+			alert.showAndWait();
+
+		}
 
 		new AutoCompleteBox(cmb1);
 
@@ -182,21 +200,21 @@ public class Controller {
 	private void validateForm() {
 
 		try {
-			financeModuleService.validation(Optional.ofNullable(dateFrom.getValue()),
-					Optional.ofNullable(dateTo.getValue()), Optional.ofNullable(cmb1.getValue()));
+			validation.validation(Optional.ofNullable(dateFrom.getValue()), Optional.ofNullable(dateTo.getValue()),
+					Optional.ofNullable(cmb1.getValue()));
 
 			List<ReservationClaim> data = financeModuleService.getReservationClaims(dateFrom.getValue(),
 					dateTo.getValue(), cmb1.getValue().getIdAgency(),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextService.getText())),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextType.getText())),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextClaimDesc.getText())),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextFrom.getText())),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextTo.getText())),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextPayingAgency.getText())),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSicoraxCode.getText())),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextAuxiliary.getText())),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextSubsidiary.getText())),
-					financeModuleService.textFieldValidation(Optional.ofNullable(inputTextCurr.getText())), true);
+					validation.textFieldValidation(Optional.ofNullable(inputTextService.getText())),
+					validation.textFieldValidation(Optional.ofNullable(inputTextType.getText())),
+					validation.textFieldValidation(Optional.ofNullable(inputTextClaimDesc.getText())),
+					validation.textFieldValidation(Optional.ofNullable(inputTextFrom.getText())),
+					validation.textFieldValidation(Optional.ofNullable(inputTextTo.getText())),
+					validation.textFieldValidation(Optional.ofNullable(inputTextPayingAgency.getText())),
+					validation.textFieldValidation(Optional.ofNullable(inputTextSicoraxCode.getText())),
+					validation.textFieldValidation(Optional.ofNullable(inputTextAuxiliary.getText())),
+					validation.textFieldValidation(Optional.ofNullable(inputTextSubsidiary.getText())),
+					validation.textFieldValidation(Optional.ofNullable(inputTextCurr.getText())), true);
 
 			/////////////////////// CREATE TABLE/////////////////////
 
@@ -256,7 +274,7 @@ public class Controller {
 
 			tv1.setItems(FXCollections.observableArrayList(data));
 
-		} catch (FinanceModuleException e) {
+		} catch (FinanceModuleException | ValidationException e) {
 
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.initOwner(searchBtn.getScene().getWindow());
@@ -274,8 +292,8 @@ public class Controller {
 
 		try {
 
-			financeModuleService.validation(Optional.ofNullable(dateFrom.getValue()),
-					Optional.ofNullable(dateTo.getValue()), Optional.ofNullable(cmb1.getValue()));
+			validation.validation(Optional.ofNullable(dateFrom.getValue()), Optional.ofNullable(dateTo.getValue()),
+					Optional.ofNullable(cmb1.getValue()));
 
 			Alert alertStart = new Alert(AlertType.INFORMATION);
 			alertStart.initOwner(closeBtn.getScene().getWindow());
@@ -366,7 +384,7 @@ public class Controller {
 			alertEnd.setHeaderText("All Operations done successfully.");
 			alertEnd.showAndWait();
 
-		} catch (FinanceModuleException e) {
+		} catch (FinanceModuleException | ValidationException e) {
 
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.initOwner(closeBtn.getScene().getWindow());
@@ -382,6 +400,21 @@ public class Controller {
 	@FXML
 
 	private void print() {
+
+		try {
+
+			throw new FinanceModuleException("Printing feature will be available soon");
+
+		} catch (FinanceModuleException e) {
+
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.initOwner(closeBtn.getScene().getWindow());
+			alert.setTitle("Printing feature");
+			alert.setHeaderText(e.getMessage());
+			// alert.setContentText(e.getMessage());
+			alert.showAndWait();
+
+		}
 
 	}
 

@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import com.mautourco.finance.exception.DAOConfigurationException;
 import com.mautourco.finance.properties.PropertiesReader;
+import com.mysql.cj.exceptions.CJCommunicationsException;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.pool.HikariPool.PoolInitializationException;
 
 public class DAOFactory {
 
@@ -23,14 +27,14 @@ public class DAOFactory {
 
 	public static DAOFactory getInstance() {
 
+		PropertiesReader propertiesReaderAppProfile;
+		String url;
+		String username;
+		String password;
+
+		String profile;
+
 		try {
-
-			PropertiesReader propertiesReaderAppProfile;
-			String url;
-			String username;
-			String password;
-
-			String profile;
 
 			profile = new PropertiesReader("application.properties").getProperty("profile").trim();
 
@@ -42,6 +46,12 @@ public class DAOFactory {
 			username = propertiesReaderAppProfile.getProperty("datasource.username").trim();
 			password = propertiesReaderAppProfile.getProperty("datasource.password").trim();
 
+		} catch (IOException | NullPointerException e) {
+
+			throw new DAOConfigurationException("Impossible to get DataBase Properties!", e);
+		}
+
+		try {
 			HikariConfig config = new HikariConfig();
 
 			config.setJdbcUrl(url);
@@ -56,9 +66,14 @@ public class DAOFactory {
 
 			dataSource = new HikariDataSource(config);
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (PoolInitializationException e) {
+
+			throw new DAOConfigurationException("DataBase Connection Pool Initialization failed!", e);
+
+		} catch (CJCommunicationsException e) {
+
+			throw new DAOConfigurationException("DataBase Access failed!", e);
+
 		}
 
 		instance = new DAOFactory(dataSource);
@@ -66,11 +81,24 @@ public class DAOFactory {
 
 	}
 
-	Connection getConnection() throws SQLException {
+	Connection getConnection() {
 
-		DAOFactory.numberOfConnections++;
-		System.err.println("Connections : " + DAOFactory.numberOfConnections);
-		return dataSource.getConnection();
+		try {
+
+			DAOFactory.numberOfConnections++;
+			System.err.println("Connections : " + DAOFactory.numberOfConnections);
+			return dataSource.getConnection();
+
+		} catch (CommunicationsException | CJCommunicationsException e) {
+
+			throw new DAOConfigurationException("DataBase Access failed!", e);
+
+		} catch (SQLException ex) {
+
+			throw new DAOConfigurationException(ex.toString(), ex);
+
+		}
+
 	}
 
 }
