@@ -9,9 +9,9 @@ import java.util.Optional;
 import com.mautourco.finance.exception.ValidationException;
 import com.mautourco.finance.model.ComboBoxItem;
 
-public class Validation {
+public class ValidationForm {
 
-	private void datePickerValidationDateFrom(Optional<LocalDate> date) throws ValidationException {
+	public void datePickerValidationDateFrom(Optional<LocalDate> date) throws ValidationException {
 
 		if (date.isEmpty()) {
 			throw new ValidationException("Please, select Date From!");
@@ -30,7 +30,7 @@ public class Validation {
 
 	}
 
-	private void datePickerValidationDateTo(Optional<LocalDate> date) throws ValidationException {
+	public void datePickerValidationDateTo(Optional<LocalDate> date) throws ValidationException {
 
 		if (date.isEmpty()) {
 			throw new ValidationException("Please, select Date To!");
@@ -49,21 +49,13 @@ public class Validation {
 
 	}
 
-	private void comboBoxValidation(Optional<ComboBoxItem> item) throws ValidationException {
+	public void comboBoxValidation(Optional<ComboBoxItem> item) throws ValidationException {
 
 		if (item.isEmpty()) {
 			throw new ValidationException("Please, select an Agency!");
 
 		}
 
-	}
-
-	public void validation(Optional<LocalDate> dateFrom, Optional<LocalDate> dateTo, Optional<ComboBoxItem> item)
-			throws ValidationException {
-
-		datePickerValidationDateFrom(dateFrom);
-		datePickerValidationDateTo(dateTo);
-		comboBoxValidation(item);
 	}
 
 	public String textFieldValidation(Optional<String> value) {

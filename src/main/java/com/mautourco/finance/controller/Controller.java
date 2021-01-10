@@ -11,7 +11,7 @@ import com.mautourco.finance.exception.ValidationException;
 import com.mautourco.finance.model.ComboBoxItem;
 import com.mautourco.finance.model.ReservationClaim;
 import com.mautourco.finance.service.FinanceModuleService;
-import com.mautourco.finance.validation.Validation;
+import com.mautourco.finance.validation.ValidationForm;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -31,7 +31,7 @@ public class Controller {
 
 	private FinanceModuleService financeModuleService = new FinanceModuleService();
 
-	private Validation validation = new Validation();
+	private ValidationForm validationForm = new ValidationForm();
 
 	@FXML
 	private DatePicker dateFrom;
@@ -200,21 +200,23 @@ public class Controller {
 	private void validateForm() {
 
 		try {
-			validation.validation(Optional.ofNullable(dateFrom.getValue()), Optional.ofNullable(dateTo.getValue()),
-					Optional.ofNullable(cmb1.getValue()));
+
+			validationForm.datePickerValidationDateFrom(Optional.ofNullable(dateFrom.getValue()));
+			validationForm.datePickerValidationDateTo(Optional.ofNullable(dateTo.getValue()));
+			validationForm.comboBoxValidation(Optional.ofNullable(cmb1.getValue()));
 
 			List<ReservationClaim> data = financeModuleService.getReservationClaims(dateFrom.getValue(),
 					dateTo.getValue(), cmb1.getValue().getIdAgency(),
-					validation.textFieldValidation(Optional.ofNullable(inputTextService.getText())),
-					validation.textFieldValidation(Optional.ofNullable(inputTextType.getText())),
-					validation.textFieldValidation(Optional.ofNullable(inputTextClaimDesc.getText())),
-					validation.textFieldValidation(Optional.ofNullable(inputTextFrom.getText())),
-					validation.textFieldValidation(Optional.ofNullable(inputTextTo.getText())),
-					validation.textFieldValidation(Optional.ofNullable(inputTextPayingAgency.getText())),
-					validation.textFieldValidation(Optional.ofNullable(inputTextSicoraxCode.getText())),
-					validation.textFieldValidation(Optional.ofNullable(inputTextAuxiliary.getText())),
-					validation.textFieldValidation(Optional.ofNullable(inputTextSubsidiary.getText())),
-					validation.textFieldValidation(Optional.ofNullable(inputTextCurr.getText())), true);
+					validationForm.textFieldValidation(Optional.ofNullable(inputTextService.getText())),
+					validationForm.textFieldValidation(Optional.ofNullable(inputTextType.getText())),
+					validationForm.textFieldValidation(Optional.ofNullable(inputTextClaimDesc.getText())),
+					validationForm.textFieldValidation(Optional.ofNullable(inputTextFrom.getText())),
+					validationForm.textFieldValidation(Optional.ofNullable(inputTextTo.getText())),
+					validationForm.textFieldValidation(Optional.ofNullable(inputTextPayingAgency.getText())),
+					validationForm.textFieldValidation(Optional.ofNullable(inputTextSicoraxCode.getText())),
+					validationForm.textFieldValidation(Optional.ofNullable(inputTextAuxiliary.getText())),
+					validationForm.textFieldValidation(Optional.ofNullable(inputTextSubsidiary.getText())),
+					validationForm.textFieldValidation(Optional.ofNullable(inputTextCurr.getText())), true);
 
 			/////////////////////// CREATE TABLE/////////////////////
 
@@ -292,8 +294,9 @@ public class Controller {
 
 		try {
 
-			validation.validation(Optional.ofNullable(dateFrom.getValue()), Optional.ofNullable(dateTo.getValue()),
-					Optional.ofNullable(cmb1.getValue()));
+			validationForm.datePickerValidationDateFrom(Optional.ofNullable(dateFrom.getValue()));
+			validationForm.datePickerValidationDateTo(Optional.ofNullable(dateTo.getValue()));
+			validationForm.comboBoxValidation(Optional.ofNullable(cmb1.getValue()));
 
 			Alert alertStart = new Alert(AlertType.INFORMATION);
 			alertStart.initOwner(closeBtn.getScene().getWindow());
@@ -426,17 +429,14 @@ public class Controller {
 
 		if (App.isLight()) {
 
-			System.err.println("THEME l :");
-
 			if (themeBtn.getScene().getStylesheets().contains(App.class.getResource(App.DARK_THEME).toExternalForm())) {
 
-				System.err.println("THEME l1 :");
 				themeBtn.getScene().getStylesheets().remove(App.class.getResource(App.DARK_THEME).toExternalForm());
 			}
 
 			if (!themeBtn.getScene().getStylesheets()
 					.contains(App.class.getResource(App.LIGHT_THEME).toExternalForm())) {
-				System.err.println("THEME l2 :");
+
 				themeBtn.getScene().getStylesheets().add(App.class.getResource(App.LIGHT_THEME).toExternalForm());
 			}
 
@@ -444,17 +444,15 @@ public class Controller {
 
 		} else {
 
-			System.err.println("THEME d :");
-
 			if (themeBtn.getScene().getStylesheets()
 					.contains(App.class.getResource(App.LIGHT_THEME).toExternalForm())) {
-				System.err.println("THEME : d1");
+
 				themeBtn.getScene().getStylesheets().remove(App.class.getResource(App.LIGHT_THEME).toExternalForm());
 			}
 
 			if (!themeBtn.getScene().getStylesheets()
 					.contains(App.class.getResource(App.DARK_THEME).toExternalForm())) {
-				System.err.println("THEME : d2");
+
 				themeBtn.getScene().getStylesheets().add(App.class.getResource(App.DARK_THEME).toExternalForm());
 			}
 
