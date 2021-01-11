@@ -59,4 +59,10 @@ https://docs.oracle.com/en/java/javase/11/tools/jlink.html
 
 https://openjfx.io/openjfx-docs/
 
+# Error: automatic module cannot be used with jlink: HikariCP
+
+https://www.google.com/search?q=Error%3A+automatic+module+cannot+be+used+with+jlink%3A+HikariCP&oq=Error%3A+automatic+module+cannot+be+used+with+jlink%3A+HikariCP&aqs=chrome..69i57j69i58.2074j0j7&sourceid=chrome&ie=UTF-8
+
+https://stackoverflow.com/questions/56656822/java-11-jlink-getting-error-automatic-module-cannot-be-used-with-jlink-com-mic
+
 
