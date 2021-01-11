@@ -24,3 +24,13 @@ https://www.google.com/search?q=styling+javafx+alert+css&oq=styling+javafx+alert
 
 https://stackoverflow.com/questions/37354686/customize-javafx-alert-with-css/37368747
 
+# build.xml ant task maven javafx
+
+https://www.google.com/search?q=build.xml+ant+task+maven+javafx&oq=build.xml+ant+task+maven+javafx&aqs=chrome..69i57.19179j0j7&sourceid=chrome&ie=UTF-8
+
+https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/javafx_ant_tasks.html
+
+https://stackoverflow.com/questions/29086117/cannot-build-javafx-application-using-ant
+
+https://github.com/javafx-maven-plugin/javafx-maven-plugin
+
