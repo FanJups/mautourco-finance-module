@@ -57,4 +57,6 @@ https://stackoverflow.com/questions/53453212/how-to-deploy-a-javafx-11-desktop-a
 
 https://docs.oracle.com/en/java/javase/11/tools/jlink.html
 
+https://openjfx.io/openjfx-docs/
+
 
