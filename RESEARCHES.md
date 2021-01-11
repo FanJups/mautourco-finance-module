@@ -34,3 +34,7 @@ https://stackoverflow.com/questions/29086117/cannot-build-javafx-application-usi
 
 https://github.com/javafx-maven-plugin/javafx-maven-plugin
 
+https://jitpack.io/p/javafx-maven-plugin/javafx-maven-plugin
+
+
+
