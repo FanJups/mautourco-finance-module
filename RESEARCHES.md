@@ -36,5 +36,17 @@ https://github.com/javafx-maven-plugin/javafx-maven-plugin
 
 https://jitpack.io/p/javafx-maven-plugin/javafx-maven-plugin
 
+# maven plugin to build native javafx apps
+
+https://www.google.com/search?q=maven+plugin+to+build+native+javafx+apps&oq=maven+plugin+to+build+native+javafx+apps&aqs=chrome..69i57j33i22i29i30.17057j0j7&sourceid=chrome&ie=UTF-8
+
+https://stackoverflow.com/questions/29273279/maven-build-native-installer-of-javafx-application-with-inno-setup-script
+
+https://github.com/fvarrui/JavaPackager
+
+https://leward.eu/2020/02/19/native-gui-app-with-javafx.html
+
+http://pgkaila.github.io/javafx-maven-plugin/native-bundle.html#:~:text=The%20JavaFX%20Maven%20plugin%20allows,is%20bundled%20into%20the%20installer.
+
 
 
