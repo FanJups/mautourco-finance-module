@@ -49,4 +49,12 @@ https://leward.eu/2020/02/19/native-gui-app-with-javafx.html
 http://pgkaila.github.io/javafx-maven-plugin/native-bundle.html#:~:text=The%20JavaFX%20Maven%20plugin%20allows,is%20bundled%20into%20the%20installer.
 
 
+# native javafx apps with openjfx
+
+https://www.google.com/search?q=native+javafx+apps+with+openjfx&oq=native+javafx+apps+with+openjfx&aqs=chrome..69i57.16117j0j7&sourceid=chrome&ie=UTF-8
+
+https://stackoverflow.com/questions/53453212/how-to-deploy-a-javafx-11-desktop-application-with-a-jre
+
+https://docs.oracle.com/en/java/javase/11/tools/jlink.html
+
 
