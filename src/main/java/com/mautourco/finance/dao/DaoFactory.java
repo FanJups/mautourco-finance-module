@@ -6,8 +6,6 @@ import java.sql.SQLException;
 
 import com.mautourco.finance.exception.DAOConfigurationException;
 import com.mautourco.finance.properties.PropertiesReader;
-import com.mysql.cj.exceptions.CJCommunicationsException;
-import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.pool.HikariPool.PoolInitializationException;
@@ -70,12 +68,7 @@ public class DAOFactory {
 
 			throw new DAOConfigurationException("DataBase Connection Pool Initialization failed!", e);
 
-		} catch (CJCommunicationsException e) {
-
-			throw new DAOConfigurationException("DataBase Access failed!", e);
-
 		}
-
 		instance = new DAOFactory(dataSource);
 		return instance;
 
@@ -89,13 +82,9 @@ public class DAOFactory {
 			System.err.println("Connections : " + DAOFactory.numberOfConnections);
 			return dataSource.getConnection();
 
-		} catch (CommunicationsException | CJCommunicationsException e) {
-
-			throw new DAOConfigurationException("DataBase Access failed!", e);
-
 		} catch (SQLException ex) {
 
-			throw new DAOConfigurationException(ex.toString(), ex);
+			throw new DAOConfigurationException(ex);
 
 		}
 
