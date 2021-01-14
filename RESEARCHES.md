@@ -91,6 +91,12 @@ https://github.com/lanthale/ModitectGen/blob/main/ModitectGen/pom.xml
 
 https://github.com/lanthale/JeditFX/blob/master/JeditFX/pom.xml
 
+# Error: Module org.slf4j not found, required by com.zaxxer.hikari
+
+https://www.google.com/search?q=Error%3A+Module+org.slf4j+not+found%2C+required+by+com.zaxxer.hikari&oq=Error%3A+Module+org.slf4j+not+found%2C+required+by+com.zaxxer.hikari&aqs=chrome..69i57j69i58.4133j0j7&sourceid=chrome&ie=UTF-8
+
+https://stackoverflow.com/questions/57289918/maven-module-info-java6-21-module-not-found-org-slf4j
+
 
 
 
