@@ -65,4 +65,22 @@ https://www.google.com/search?q=Error%3A+automatic+module+cannot+be+used+with+jl
 
 https://stackoverflow.com/questions/56656822/java-11-jlink-getting-error-automatic-module-cannot-be-used-with-jlink-com-mic
 
+# deploy JavaFx App as a Self-Contained App using maven
+
+https://twitter.com/FanJups/status/1348531319706447872
+
+# moditect plugin doesn't work openjfx plugin goal jlink
+
+https://www.google.com/search?q=moditect+plugin+doesn%27t+work+openjfx+plugin+goal+jlink&oq=moditect+plugin+doesn%27t+work+openjfx+plugin+goal+jlink&aqs=chrome..69i57.68370j0j7&sourceid=chrome&ie=UTF-8
+
+https://stackoverflow.com/questions/52215353/javafx-maven-with-moditect-and-java-11
+
+https://bitbucket.org/Gumara/mavenjavafx/src/moditect/pom.xml
+
+https://github.com/lanthale/ModitectGen/blob/main/ModitectGen/pom.xml
+
+
+
+
+
 
