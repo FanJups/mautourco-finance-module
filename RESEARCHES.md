@@ -97,6 +97,16 @@ https://www.google.com/search?q=Error%3A+Module+org.slf4j+not+found%2C+required+
 
 https://stackoverflow.com/questions/57289918/maven-module-info-java6-21-module-not-found-org-slf4j
 
+# useful
+
+https://github.com/brettwooldridge/HikariCP/issues/1506
+
+https://github.com/moditect/moditect/blob/master/integrationtest/undertow/pom.xml
+
+https://github.com/moditect/moditect
+
+
+
 
 
 
