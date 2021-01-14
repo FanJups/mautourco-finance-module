@@ -79,6 +79,18 @@ https://bitbucket.org/Gumara/mavenjavafx/src/moditect/pom.xml
 
 https://github.com/lanthale/ModitectGen/blob/main/ModitectGen/pom.xml
 
+# hikaricp modular jar
+
+https://www.google.com/search?q=hikaricp+modular+jar&oq=hikaricp+modular+jar&aqs=chrome..69i57.17778j0j7&sourceid=chrome&ie=UTF-8
+
+https://github.com/brettwooldridge/HikariCP/pull/1573/commits/aaf4d3a59e62e8312db97d3314ff08f84f199d63
+
+https://github.com/lanthale/ModitectGen
+
+https://github.com/lanthale/ModitectGen/blob/main/ModitectGen/pom.xml
+
+https://github.com/lanthale/JeditFX/blob/master/JeditFX/pom.xml
+
 
 
 
