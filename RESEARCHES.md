@@ -105,6 +105,16 @@ https://github.com/moditect/moditect/blob/master/integrationtest/undertow/pom.xm
 
 https://github.com/moditect/moditect
 
+# install java 15 windows eclipse
+
+https://www.google.com/search?q=install+java+15+windows+eclipse&oq=install+java+15+windows+eclipse&aqs=chrome..69i57j33i22i29i30.52104j0j7&sourceid=chrome&ie=UTF-8
+
+https://www.codejava.net/java-se/download-and-install-openjdk-15
+
+https://www.codejava.net/ides/eclipse/add-java-15-support-for-eclipse-2020-09
+
+http://jdk.java.net/15/
+
 
 
 
