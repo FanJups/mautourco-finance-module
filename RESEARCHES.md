@@ -115,7 +115,17 @@ https://www.codejava.net/ides/eclipse/add-java-15-support-for-eclipse-2020-09
 
 http://jdk.java.net/15/
 
+# javapackager java 11
 
+https://www.google.com/search?q=javapackager+java+11&oq=javapackager+java+&aqs=chrome.1.69i57j0j0i22i30j0i22i30i395l3j69i60l2.7825j1j7&sourceid=chrome&ie=UTF-8
+
+https://medium.com/@adam_carroll/java-packager-with-jdk11-31b3d620f4a8
+
+https://github.com/Santulator/Santulator
+
+https://stackoverflow.com/questions/53548430/how-to-package-app-at-java-11-with-non-modular-dependencies
+
+https://www.infoq.com/news/2019/03/jep-343-jpackage/
 
 
 
