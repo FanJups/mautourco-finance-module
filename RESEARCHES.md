@@ -127,8 +127,8 @@ https://stackoverflow.com/questions/53548430/how-to-package-app-at-java-11-with-
 
 https://www.infoq.com/news/2019/03/jep-343-jpackage/
 
+# packaging tool java 16
 
+https://www.oracle.com/news/announcement/oracle-announces-java-16-031621.html
 
-
-
-
+https://openjdk.java.net/jeps/392
